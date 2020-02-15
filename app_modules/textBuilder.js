@@ -4,7 +4,7 @@ String.prototype.shuffle = function () {
   let a = this.split('');
   let n = this.length;
 
-  for(let i = n - 1; i > 0; i--) {
+  for (let i = n - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1));
     let temp = a[i];
     a[i] = a[j];
