@@ -6,9 +6,11 @@ let win;
 
 function createWindow() {
   win = new BrowserWindow({
+    width: 550,
+    height: 650,
+    resizable: false,
     autoHideMenuBar: false,
   });
-  win.maximize();
   win.loadFile('index.html');
   win.on('closed', () => win = null);
 }

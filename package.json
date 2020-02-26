@@ -4,7 +4,9 @@
   "description": "A simple typing tutor that expects to be not so simple.",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "css-build": "node-sass --omit-source-map-url style.scss style.css",
+    "css-watch": "npm run css-build -- --watch",
+    "start": "electron . & npm run css-watch"
   },
   "keywords": [
     "type",
@@ -14,7 +16,12 @@
   "author": "Wellvergton",
   "license": "ISC",
   "devDependencies": {
+    "bulma": "^0.8.0",
     "electron": "^7.1.5",
-    "electron-reload": "^1.5.0"
+    "electron-reload": "^1.5.0",
+    "node-sass": "^4.13.1"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.12.1"
   }
 }

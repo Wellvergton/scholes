@@ -1,0 +1,13 @@
+@charset "utf-8";
+
+$pagination-margin: 3rem;
+
+@import "./node_modules/bulma/sass/utilities/_all.sass";
+@import "./node_modules/bulma/sass/base/_all.sass";
+@import "./node_modules/bulma/sass/grid/_all.sass";
+@import "./node_modules/bulma/sass/components/card.sass";
+@import "./node_modules/bulma/sass/components/pagination.sass";
+@import "./node_modules/bulma/sass/elements/button.sass";
+@import "./node_modules/bulma/sass/elements/icon.sass";
+@import "./node_modules/bulma/sass/elements/image.sass";
+@import "./node_modules/bulma/sass/layout/hero.sass";

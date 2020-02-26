@@ -2,7 +2,7 @@ import { startManageUserInputs } from './app_modules/keyPress.js';
 import { buildText } from './app_modules/textBuilder.js';
 
 document.addEventListener('keypress', (event) => {
-  if(event.keyCode == 32 && event.target == document.body) {
+  if (event.keyCode == 32 && event.target == document.body) {
     event.preventDefault();
   }
 });
@@ -21,7 +21,3 @@ const keySets = {
   twelve: 'zxcvbnm,.;',
   thirteen: 'qwertyuiopasdfghjklçzxcvbnm,.;'
 };
-
-buildText(keySets.one);
-
-startManageUserInputs();
