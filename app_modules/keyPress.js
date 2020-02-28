@@ -14,10 +14,10 @@ let position = 0;
 function markPressedKey(key) {
   return new Promise(resolve => {
     if (isTheCorrectKey(key, elementsWithKeys[position].innerHTML)) {
-      elementsWithKeys[position].style.color = 'green'
+      elementsWithKeys[position].classList.add("has-text-success");
       resolve('Right');
     } else {
-      elementsWithKeys[position].style.color = 'red'
+      elementsWithKeys[position].classList.add("has-text-danger");
       resolve('Wrong');
     }
   });
