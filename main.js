@@ -1,6 +1,10 @@
 const { app, BrowserWindow } = require('electron');
 
-require('electron-reload')(__dirname);
+const path = require('path');
+
+require('electron-reload')(__dirname, {
+  electron: path.join(__dirname, 'node_modules', '.bin', 'electron')
+});
 
 let win;
 
