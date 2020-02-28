@@ -47,7 +47,7 @@ function splitWordWithBlankOrCarriage(string) {
     newString = newString.concat(string[i]);
   }
 
-  return newString;
+  return newString.addCarriageReturn();
 }
 
 let text = document.getElementById('text');
