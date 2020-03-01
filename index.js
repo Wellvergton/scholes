@@ -21,3 +21,6 @@ const keySets = {
   twelve: 'zxcvbnm,.;',
   thirteen: 'qwertyuiopasdfghjklçzxcvbnm,.;'
 };
+
+buildText(keySets.thirteen);
+// startManageUserInputs();

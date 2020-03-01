@@ -10,9 +10,9 @@ let win;
 
 function createWindow() {
   win = new BrowserWindow({
-    width: 550,
-    height: 650,
-    resizable: false,
+    // width: 550,
+    // height: 650,
+    // resizable: false,
     autoHideMenuBar: false,
   });
   win.loadFile('index.html');
