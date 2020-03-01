@@ -10,7 +10,7 @@
   <title>Scholes</title>
 </head>
 <body>
-  <!-- <section class="hero is-fullheight">
+  <section class="hero is-fullheight is-hidden">
     <div class="hero-body">
       <div class="columns is-mobile is-centered is-multiline">
         <div class="card column is-four-fifths has-text-centered">
@@ -60,21 +60,27 @@
         </nav>
       </div>
     </div>
-  </section> -->
+  </section>
   <section class="hero is-fullheight">
     <div class="hero-head">
       <nav class="navbar is-spaced">
         <div class="navbar-menu">
-          <span class="icon is-medium">
-            <i class="fas fa-times fa-2x"></i>
-          </span>
+          <button class="button is-white">
+            <span class="icon is-medium">
+              <i class="fas fa-times fa-2x"></i>
+            </span>
+          </button>
           <div class="navbar-end">
-            <span class="icon is-medium">
-              <i class="fas fa-chevron-left fa-2x"></i>
-            </span>
-            <span class="icon is-medium">
-              <i class="fas fa-chevron-right fa-2x"></i>
-            </span>
+            <button class="button is-white">
+              <span class="icon is-medium">
+                <i class="fas fa-chevron-left fa-2x"></i>
+              </span>
+            </button>
+            <button class="button is-white">
+              <span class="icon is-medium">
+                <i class="fas fa-chevron-right fa-2x"></i>
+              </span>
+            </button>
           </div>
         </div>
       </nav>
@@ -85,7 +91,7 @@
           <i class="fas fa-hand-paper fa-8x fa-flip-horizontal"></i>
         </div>
         <div class="column is-three-quarters has-text-centered">
-          <p id="text" class="is-size-5 is-family-monospace"></p>
+          <p id="text" class="is-size-5 is-family-monospace is-unselectable"></p>
         </div>
         <div class="column">
           <i class="fas fa-hand-paper fa-8x"></i>
