@@ -22,5 +22,21 @@ const keySets = {
   thirteen: 'qwertyuiopasdfghjklçzxcvbnm,.;'
 };
 
+const screens = document.getElementsByClassName('hero');
+
+function toggleScreen() {
+  [...screens].map((i) => {
+    if (i.classList.contains('is-hidden')) {
+      i.classList.remove('is-hidden');
+    } else {
+      i.classList.add('is-hidden');
+    }
+  })
+}
+
+const closeButton = document.getElementById('close-button');
+
+closeButton.addEventListener('click', toggleScreen);
+
 buildText(keySets.thirteen);
 // startManageUserInputs();
