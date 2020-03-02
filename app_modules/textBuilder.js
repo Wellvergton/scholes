@@ -59,6 +59,8 @@ function buildText(keySet) {
   let rawText = build600CharScrambledWord(keySet);
   let splitedText = splitWordWithBlankOrCarriage(rawText);
 
+  text.innerHTML = '';
+
   for (let i = 0; i < splitedText.length; i++) {
     text.appendChild(span.cloneNode()).innerHTML = splitedText[i];
 
