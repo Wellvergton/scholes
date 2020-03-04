@@ -1,4 +1,4 @@
-export { startManageUserInputs }
+export { startManageUserInputs, stopManageUserInputs, setElementsToBePressed }
 
 function isTheCorrectKey(keyPressed, expectedKey) {
   if (keyPressed == 'Enter' && expectedKey == '↵') {
@@ -8,34 +8,23 @@ function isTheCorrectKey(keyPressed, expectedKey) {
   }
 }
 
-let elementsWithKeys = document.getElementsByClassName('key');
+let keysToBePressed;
+
+function setElementsToBePressed(className) {
+  keysToBePressed = document.getElementsByClassName(className);
+}
+
 let position = 0;
 
 function markPressedKey(key) {
-  return new Promise(resolve => {
-    if (isTheCorrectKey(key, elementsWithKeys[position].innerHTML)) {
-      elementsWithKeys[position].classList.add("has-text-success");
-      resolve('Right');
+  return new Promise((resolve) => {
+    if (isTheCorrectKey(key, keysToBePressed[position].innerHTML)) {
+      keysToBePressed[position].classList.add("has-text-success");
+      resolve();
     } else {
-      elementsWithKeys[position].classList.add("has-text-danger");
-      resolve('Wrong');
+      keysToBePressed[position].classList.add("has-text-danger");
+      resolve();
     }
-  });
-}
-
-let errorsByKey = {};
-
-function recordErrorsByKey(key) {
-  errorsByKey[key] ? errorsByKey[key]++ : errorsByKey[key] = 1;
-}
-
-function clearErrorsByKey() {
-  errorsByKey = {};
-}
-
-function getErrorsCount() {
-  return Object.values(errorsByKey).reduce((acc, value) => {
-    return acc + value;
   });
 }
 
@@ -48,10 +37,9 @@ function stopManageUserInputs() {
 }
 
 async function manageUserInput(keypress) {
-  let markingResult = await markPressedKey(keypress.key);
-  if (markingResult == 'Wrong') recordErrorsByKey(keypress.key);
+  await markPressedKey(keypress.key);
   position++;
-  if (position == elementsWithKeys.length) {
+  if (position == keysToBePressed.length) {
     position = 0;
     stopManageUserInputs();
   }

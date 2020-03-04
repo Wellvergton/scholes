@@ -1,4 +1,6 @@
-import { startManageUserInputs } from './app_modules/keyPress.js';
+import {
+  startManageUserInputs, stopManageUserInputs, setElementsToBePressed
+} from './app_modules/keyPress.js';
 import { lessonProxy } from './app_modules/screenManager.js';
 
 document.addEventListener('keypress', (event) => {
@@ -9,4 +11,5 @@ document.addEventListener('keypress', (event) => {
 
 lessonProxy.lessonIndex = 0;
 
-// startManageUserInputs();
+setElementsToBePressed('key');
+startManageUserInputs();
