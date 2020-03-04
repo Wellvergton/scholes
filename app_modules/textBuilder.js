@@ -50,12 +50,16 @@ function splitWordWithBlankOrCarriage(string) {
   return newString.addCarriageReturn();
 }
 
-let text = document.getElementById('text');
 let span = document.createElement('span');
-span.className = 'key';
 let lineBreak = document.createElement('br');
 
-function buildText(keySet) {
+function setTextElement(elementId) {
+  return document.getElementById(elementId);
+}
+
+function buildText(keySet, textElementId, charElementsClass) {
+  let text = setTextElement(textElementId);
+  span.className = charElementsClass;
   let rawText = build600CharScrambledWord(keySet);
   let splitedText = splitWordWithBlankOrCarriage(rawText);
 
