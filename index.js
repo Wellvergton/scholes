@@ -1,5 +1,6 @@
 import {
-  startManageUserInputs, stopManageUserInputs, setElementsToBePressed
+  startManageUserInputs, stopManageUserInputs,
+  setElementsToBePressed, restartManageUserInputs
 } from './app_modules/keyPress.js';
 import {
   screenProxyBuilder, setScreens, toggleScreen
@@ -35,10 +36,12 @@ let screenProxy = screenProxyBuilder(screenProxyArgs);
 screenProxy.lessonIndex = 0;
 
 previousButton.addEventListener('click', () => {
+  restartManageUserInputs();
   --screenProxy.lessonIndex;
 });
 
 nexButton.addEventListener('click', () => {
+  restartManageUserInputs();
   ++screenProxy.lessonIndex;
 });
 

@@ -1,4 +1,7 @@
-export { startManageUserInputs, stopManageUserInputs, setElementsToBePressed }
+export {
+  startManageUserInputs, stopManageUserInputs,
+  setElementsToBePressed, restartManageUserInputs
+}
 
 function isTheCorrectKey(keyPressed, expectedKey) {
   if (keyPressed == 'Enter' && expectedKey == '\u21B5') {
@@ -30,6 +33,10 @@ function markPressedKey(key) {
 
 function startManageUserInputs() {
   document.addEventListener('keypress', manageUserInput);
+}
+
+function restartManageUserInputs() {
+  position = 0;
 }
 
 function stopManageUserInputs() {
