@@ -1,8 +1,32 @@
 import { buildText } from './textBuilder.js';
 
-export { lessonProxy }
+export { screenProxyBuilder, setScreens, toggleScreen }
 
-const keySets = {
+let screens;
+
+function setScreens(elems) {
+  screens = elems;
+}
+
+function toggleScreen() {
+  [...screens].map((i) => {
+    if (i.classList.contains('is-hidden')) {
+      i.classList.remove('is-hidden');
+    } else {
+      i.classList.add('is-hidden');
+    }
+  })
+}
+
+function disableButton(button) {
+  button.setAttribute('disabled', 'disabled');
+}
+
+function enableButton(button) {
+  button.removeAttribute('disabled');
+}
+
+let keySets = {
   0: 'qwert',
   1: 'yuiop',
   2: 'asdfg',
@@ -17,60 +41,31 @@ const keySets = {
   11: 'qwertyuiopasdfghjklçzxcvbnm,.;'
 };
 
-const screens = document.getElementsByClassName('hero');
+function screenProxyBuilder(argsObj) {
+  let {textId, charsClass, previousButton, nexButton} = argsObj;
+  let proxyTarget = { lessonIndex: 0 };
+  let proxyHandler = {
+    set: (target, prop, value) => {
+      if (prop == 'lessonIndex') {
+        if (value == 0) {
+          disableButton(previousButton);
+          enableButton(nexButton);
+        } else if (value == 11) {
+          disableButton(nexButton);
+          enableButton(previousButton);
+        } else {
+          enableButton(nexButton);
+          enableButton(previousButton);
+        }
+      }
 
-function toggleScreen() {
-  [...screens].map((i) => {
-    if (i.classList.contains('is-hidden')) {
-      i.classList.remove('is-hidden');
-    } else {
-      i.classList.add('is-hidden');
+      target[prop] = value;
+
+      buildText(keySets[value], textId, charsClass);
+
+      return true;
     }
-  })
-}
-
-const closeButton = document.getElementById('close-button');
-
-closeButton.addEventListener('click', toggleScreen);
-
-function disableButton(button) {
-  button.setAttribute('disabled', 'disabled');
-}
-
-function enableButton(button) {
-  button.removeAttribute('disabled');
-}
-
-let previousButton = document.getElementById('previous-button');
-let nexButton = document.getElementById('next-button');
-
-let proxyTarget = { lessonIndex: -1 };
-let proxyHandler = {
-  set: (target, prop, value) => {
-    if (value == 0) {
-      disableButton(previousButton);
-      enableButton(nexButton);
-    } else if (value == 11) {
-      disableButton(nexButton);
-      enableButton(previousButton);
-    } else {
-      enableButton(nexButton);
-      enableButton(previousButton);
-    }
-
-    target[prop] = value;
-
-    buildText(keySets[value]);
-
-    return true;
   }
+
+  return new Proxy(proxyTarget, proxyHandler);
 }
-let lessonProxy = new Proxy(proxyTarget, proxyHandler);
-
-previousButton.addEventListener('click', () => {
-  --lessonProxy.lessonIndex;
-});
-
-nexButton.addEventListener('click', () => {
-  ++lessonProxy.lessonIndex;
-});
