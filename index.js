@@ -1,15 +1,46 @@
 import {
   startManageUserInputs, stopManageUserInputs, setElementsToBePressed
 } from './app_modules/keyPress.js';
-import { lessonProxy } from './app_modules/screenManager.js';
+import {
+  screenProxyBuilder, setScreens, toggleScreen
+} from './app_modules/screenManager.js';
 
 document.addEventListener('keypress', (event) => {
-  if (event.keyCode == 32 && event.target == document.body) {
+  if (event.code == 'Space' && event.target == document.body) {
     event.preventDefault();
   }
 });
 
-lessonProxy.lessonIndex = 0;
+document.addEventListener('focusin', (event) => {
+  if (event.target.tagName == 'BUTTON') {
+    event.target.blur();
+  }
+});
 
-setElementsToBePressed('key');
+let closeButton = document.getElementById('close-button');
+closeButton.addEventListener('click', toggleScreen);
+
+setScreens(document.getElementsByClassName('hero'));
+
+let previousButton = document.getElementById('previous-button');
+let nexButton = document.getElementById('next-button');
+
+let screenProxyArgs = {
+  textId: 'text',
+  charsClass: 'keys',
+  previousButton: previousButton,
+  nexButton: nexButton
+}
+let screenProxy = screenProxyBuilder(screenProxyArgs);
+screenProxy.lessonIndex = 0;
+
+previousButton.addEventListener('click', () => {
+  --screenProxy.lessonIndex;
+});
+
+nexButton.addEventListener('click', () => {
+  ++screenProxy.lessonIndex;
+});
+
+setElementsToBePressed('keys');
 startManageUserInputs();
