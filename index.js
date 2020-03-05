@@ -18,8 +18,13 @@ document.addEventListener('focusin', (event) => {
   }
 });
 
+function closeLesson() {
+  stopManageUserInputs();
+  toggleScreen();
+}
+
 let closeButton = document.getElementById('close-button');
-closeButton.addEventListener('click', toggleScreen);
+closeButton.addEventListener('click', closeLesson);
 
 setScreens(document.getElementsByClassName('hero'));
 
