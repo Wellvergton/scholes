@@ -19,7 +19,7 @@ String.prototype.addBlankSpace = function () {
 }
 
 String.prototype.addCarriageReturn = function () {
-  return this.concat('↵');
+  return this.concat('\u21B5');
 }
 
 function build600CharScrambledWord(string) {
@@ -68,7 +68,7 @@ function buildText(keySet, textElementId, charElementsClass) {
   for (let i = 0; i < splitedText.length; i++) {
     text.appendChild(span.cloneNode()).innerHTML = splitedText[i];
 
-    if (splitedText[i] == '↵') {
+    if (splitedText[i] == '\u21B5') {
       text.appendChild(lineBreak.cloneNode());
     }
   }

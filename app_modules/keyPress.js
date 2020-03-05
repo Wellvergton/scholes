@@ -1,7 +1,7 @@
 export { startManageUserInputs, stopManageUserInputs, setElementsToBePressed }
 
 function isTheCorrectKey(keyPressed, expectedKey) {
-  if (keyPressed == 'Enter' && expectedKey == '↵') {
+  if (keyPressed == 'Enter' && expectedKey == '\u21B5') {
     return true;
   } else {
     return keyPressed == expectedKey;
