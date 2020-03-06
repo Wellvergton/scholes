@@ -4,18 +4,18 @@ export { screenProxyBuilder, setScreens, toggleScreen }
 
 let screens;
 
-function setScreens(elems) {
-  screens = elems;
+function setScreens(elements) {
+  screens = elements;
 }
 
 function toggleScreen() {
-  [...screens].map((i) => {
-    if (i.classList.contains('is-hidden')) {
-      i.classList.remove('is-hidden');
+  for (let screen of screens) {
+    if (screen.classList.contains('is-hidden')) {
+      screen.classList.remove('is-hidden');
     } else {
-      i.classList.add('is-hidden');
+      screen.classList.add('is-hidden');
     }
-  })
+  }
 }
 
 function disableButton(button) {
