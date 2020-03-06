@@ -40,6 +40,7 @@ function restartManageUserInputs() {
 }
 
 function stopManageUserInputs() {
+  position = 0;
   document.removeEventListener('keypress', manageUserInput);
 }
 
@@ -47,7 +48,6 @@ async function manageUserInput(keypress) {
   await markPressedKey(keypress.key);
   position++;
   if (position == keysToBePressed.length) {
-    position = 0;
     stopManageUserInputs();
   }
 }
