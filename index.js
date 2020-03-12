@@ -32,23 +32,23 @@ setScreens(document.getElementsByClassName('hero'));
 let previousButton = document.getElementById('previous-button');
 let nextButton = document.getElementById('next-button');
 
-let screenProxyArgs = {
+let lessonScreenProxyArgs = {
   textId: 'text',
   charsClass: 'keys',
   previousButton: previousButton,
   nextButton: nextButton
 }
-let screenProxy = lessonScreenProxyBuilder(screenProxyArgs);
-screenProxy.lessonIndex = 1;
+let lessonScreenProxy = lessonScreenProxyBuilder(lessonScreenProxyArgs);
+lessonScreenProxy.lessonIndex = 1;
 
 previousButton.addEventListener('click', () => {
   restartManageUserInputs();
-  --screenProxy.lessonIndex;
+  --lessonScreenProxy.lessonIndex;
 });
 
 nextButton.addEventListener('click', () => {
   restartManageUserInputs();
-  ++screenProxy.lessonIndex;
+  ++lessonScreenProxy.lessonIndex;
 });
 
 setElementsToBePressed('keys');
@@ -133,6 +133,6 @@ paginationNextButton.addEventListener('click', () => {
 let startButton = document.querySelector('button.button');
 startButton.addEventListener('click', () => {
   toggleScreen();
-  screenProxy.lessonIndex = currentLesson;
+  lessonScreenProxy.lessonIndex = currentLesson;
   startManageUserInputs();
 });
