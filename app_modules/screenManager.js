@@ -1,6 +1,9 @@
 import { buildText } from './textBuilder.js';
 
-export { screenProxyBuilder, setScreens, toggleScreen, keySets }
+export {
+  lessonScreenProxyBuilder, homeScreenProxyBuilder, setScreens, toggleScreen,
+  keySets
+}
 
 let screens;
 
@@ -41,20 +44,47 @@ let keySets = {
   12: 'qwertyuiopasdfghjklçzxcvbnm,.;'
 };
 
-function screenProxyBuilder(argsObj) {
-  let {textId, charsClass, previousButton, nexButton} = argsObj;
+function homeScreenProxyBuilder(argsObj) {
+  let {previousButton, nextButton} = argsObj;
+  let proxyTarget = { currentLowestLink: 1 }
+  let proxyHandler = {
+    set: (target, prop, value) => {
+      if (prop == 'currentLowestLink') {
+        if (value <= 3) {
+          disableButton(previousButton);
+          enableButton(nextButton);
+        } else if (value >= 10) {
+          disableButton(nextButton);
+          enableButton(previousButton);
+        } else {
+          enableButton(previousButton);
+          enableButton(nextButton);
+        }
+      }
+
+      target[prop] = value;
+
+      return true;
+    }
+  }
+
+  return new Proxy(proxyTarget, proxyHandler);
+}
+
+function lessonScreenProxyBuilder(argsObj) {
+  let {textId, charsClass, previousButton, nextButton} = argsObj;
   let proxyTarget = { lessonIndex: 1 };
   let proxyHandler = {
     set: (target, prop, value) => {
       if (prop == 'lessonIndex') {
         if (value == 1) {
           disableButton(previousButton);
-          enableButton(nexButton);
+          enableButton(nextButton);
         } else if (value == 12) {
-          disableButton(nexButton);
+          disableButton(nextButton);
           enableButton(previousButton);
         } else {
-          enableButton(nexButton);
+          enableButton(nextButton);
           enableButton(previousButton);
         }
       }

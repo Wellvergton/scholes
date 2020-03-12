@@ -3,7 +3,8 @@ import {
   setElementsToBePressed, restartManageUserInputs
 } from './app_modules/keyPress.js';
 import {
-  screenProxyBuilder, setScreens, toggleScreen, keySets
+  lessonScreenProxyBuilder, homeScreenProxyBuilder, setScreens, toggleScreen,
+  keySets
 } from './app_modules/screenManager.js';
 
 document.addEventListener('keypress', (event) => {
@@ -29,15 +30,15 @@ closeButton.addEventListener('click', closeLesson);
 setScreens(document.getElementsByClassName('hero'));
 
 let previousButton = document.getElementById('previous-button');
-let nexButton = document.getElementById('next-button');
+let nextButton = document.getElementById('next-button');
 
 let screenProxyArgs = {
   textId: 'text',
   charsClass: 'keys',
   previousButton: previousButton,
-  nexButton: nexButton
+  nextButton: nextButton
 }
-let screenProxy = screenProxyBuilder(screenProxyArgs);
+let screenProxy = lessonScreenProxyBuilder(screenProxyArgs);
 screenProxy.lessonIndex = 1;
 
 previousButton.addEventListener('click', () => {
@@ -45,7 +46,7 @@ previousButton.addEventListener('click', () => {
   --screenProxy.lessonIndex;
 });
 
-nexButton.addEventListener('click', () => {
+nextButton.addEventListener('click', () => {
   restartManageUserInputs();
   ++screenProxy.lessonIndex;
 });
@@ -87,6 +88,16 @@ setLessonNameOnScreen();
   });
 });
 
+let paginationPreviousButton = document.querySelector('.pagination-previous');
+let paginationNextButton = document.querySelector('.pagination-next');
+
+let homeScreenProxyArgs = {
+  previousButton: paginationPreviousButton,
+  nextButton: paginationNextButton
+};
+let homeScreenProxy = homeScreenProxyBuilder(homeScreenProxyArgs);
+homeScreenProxy.currentLowestLink = 1;
+
 function decreasePaginationLinks() {
   if (parseInt(paginationLinks[0].innerHTML) >= 4) {
     for (const link of paginationLinks) {
@@ -96,11 +107,11 @@ function decreasePaginationLinks() {
   }
 }
 
-let paginationPreviousButton = document.querySelector('.pagination-previous');
 paginationPreviousButton.addEventListener('click', () => {
   decreasePaginationLinks();
   setCurrentLesson();
   setLessonNameOnScreen();
+  homeScreenProxy.currentLowestLink = parseInt(paginationLinks[0].innerHTML);
 });
 
 function increasePaginationLinks() {
@@ -112,11 +123,11 @@ function increasePaginationLinks() {
   }
 }
 
-let paginationNextButton = document.querySelector('.pagination-next');
 paginationNextButton.addEventListener('click', () => {
   increasePaginationLinks();
   setCurrentLesson();
   setLessonNameOnScreen();
+  homeScreenProxy.currentLowestLink = parseInt(paginationLinks[0].innerHTML);
 });
 
 let startButton = document.querySelector('button.button');
