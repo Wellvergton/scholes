@@ -24,6 +24,12 @@ function closeLesson() {
   toggleScreen();
 }
 
+function hasPlayerAlreadyTyped() {
+  let firstChar = document.querySelector('.keys');
+  return firstChar.classList.contains('has-background-success') ||
+    firstChar.classList.contains('has-background-danger');
+}
+
 let closeButton = document.getElementById('close-button');
 closeButton.addEventListener('click', () => {
   unmaximizeWindow();
@@ -34,6 +40,20 @@ setScreens(document.getElementsByClassName('hero'));
 
 let previousButton = document.getElementById('previous-button');
 let nextButton = document.getElementById('next-button');
+
+let lessonButtons = [closeButton, previousButton, nextButton];
+
+for (let button of lessonButtons) {
+  button.addEventListener('mouseover', () => {
+    if (hasPlayerAlreadyTyped()) {
+      event.target.classList.add('is-danger');
+      event.target.style.transition = 'background-color 0.3s linear 0s';
+    }
+  });
+  button.addEventListener('mouseout', () => {
+    event.target.classList.remove('is-danger');
+  });
+}
 
 let lessonScreenProxyArgs = {
   textId: 'text',

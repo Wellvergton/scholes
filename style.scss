@@ -13,3 +13,7 @@ $pagination-margin: 3rem;
 @import "./node_modules/bulma/sass/form/_all.sass";
 @import "./node_modules/bulma/sass/elements/image.sass";
 @import "./node_modules/bulma/sass/layout/hero.sass";
+
+button > * {
+  pointer-events: none;
+}
