@@ -25,7 +25,10 @@ function closeLesson() {
 }
 
 let closeButton = document.getElementById('close-button');
-closeButton.addEventListener('click', closeLesson);
+closeButton.addEventListener('click', () => {
+  unmaximizeWindow();
+  closeLesson();
+});
 
 setScreens(document.getElementsByClassName('hero'));
 
@@ -132,6 +135,7 @@ paginationNextButton.addEventListener('click', () => {
 
 let startButton = document.querySelector('button.button');
 startButton.addEventListener('click', () => {
+  maximizeWindow();
   toggleScreen();
   lessonScreenProxy.lessonIndex = currentLesson;
   startManageUserInputs();
