@@ -22,12 +22,11 @@ let position = 0;
 function markPressedKey(key) {
   return new Promise((resolve) => {
     if (isTheCorrectKey(key, keysToBePressed[position].innerHTML)) {
-      keysToBePressed[position].classList.add("has-text-success");
-      resolve();
+      keysToBePressed[position].classList.add('has-background-success');
     } else {
-      keysToBePressed[position].classList.add("has-text-danger");
-      resolve();
+      keysToBePressed[position].classList.add('has-background-danger');
     }
+    resolve();
   });
 }
 
