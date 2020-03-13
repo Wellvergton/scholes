@@ -13,11 +13,7 @@ function setScreens(elements) {
 
 function toggleScreen() {
   for (let screen of screens) {
-    if (screen.classList.contains('is-hidden')) {
-      screen.classList.remove('is-hidden');
-    } else {
-      screen.classList.add('is-hidden');
-    }
+    screen.classList.toggle('is-hidden');
   }
 }
 
