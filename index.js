@@ -1,6 +1,7 @@
 import {
   startManageUserInputs, stopManageUserInputs,
-  setElementsToBePressed, restartManageUserInputs
+  setElementsToBePressed, restartManageUserInputs,
+  setFingerIndicator
 } from './app_modules/keyPress.js';
 import {
   lessonScreenProxyBuilder, homeScreenProxyBuilder, setScreens, toggleScreen,
@@ -75,6 +76,10 @@ nextButton.addEventListener('click', () => {
 });
 
 setElementsToBePressed('keys');
+
+let dot = document.querySelector('.fas.fa-circle.has-text-success');
+
+setFingerIndicator(dot);
 
 let paginationLinks = document.getElementsByClassName('pagination-link');
 

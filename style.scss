@@ -17,3 +17,8 @@ $pagination-margin: 3rem;
 button > * {
   pointer-events: none;
 }
+
+i.fas.fa-circle.has-text-success {
+  position: absolute;
+  z-index: 1;
+}

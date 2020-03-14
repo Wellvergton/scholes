@@ -5528,3 +5528,7 @@ a.navbar-item,
 
 button > * {
   pointer-events: none; }
+
+i.fas.fa-circle.has-text-success {
+  position: absolute;
+  z-index: 1; }
