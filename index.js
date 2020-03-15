@@ -20,71 +20,7 @@ document.addEventListener('focusin', (event) => {
   }
 });
 
-function closeLesson() {
-  stopManageUserInputs();
-  toggleScreen();
-}
-
-function hasPlayerAlreadyTyped() {
-  let firstChar = document.querySelector('.keys');
-  return firstChar.classList.contains('has-background-success') ||
-    firstChar.classList.contains('has-background-danger');
-}
-
-let closeButton = document.getElementById('close-button');
-closeButton.addEventListener('click', () => {
-  unmarkButtons();
-  markCurrentLessonButton();
-  setLessonNameOnScreen();
-  unmaximizeWindow();
-  closeLesson();
-});
-
 setScreens(document.getElementsByClassName('hero'));
-
-let previousButton = document.getElementById('previous-button');
-let nextButton = document.getElementById('next-button');
-
-let lessonButtons = [closeButton, previousButton, nextButton];
-
-for (let button of lessonButtons) {
-  button.style.transition = 'background-color 0.3s linear 0s';
-  button.addEventListener('mouseover', () => {
-    if (hasPlayerAlreadyTyped()) {
-      event.target.classList.add('is-danger');
-    }
-  });
-  button.addEventListener('mouseout', () => {
-    event.target.classList.remove('is-danger');
-  });
-}
-
-let lessonScreenProxyArgs = {
-  textId: 'text',
-  charsClass: 'keys',
-  previousButton: previousButton,
-  nextButton: nextButton
-}
-let lessonScreenProxy = lessonScreenProxyBuilder(lessonScreenProxyArgs);
-lessonScreenProxy.lessonIndex = 1;
-
-previousButton.addEventListener('click', () => {
-  --lessonScreenProxy.lessonIndex;
-  setCurrentLesson(lessonScreenProxy.lessonIndex);
-  restartManageUserInputs();
-});
-
-nextButton.addEventListener('click', () => {
-  ++lessonScreenProxy.lessonIndex;
-  setCurrentLesson(lessonScreenProxy.lessonIndex);
-  restartManageUserInputs();
-});
-
-setElementsToBePressed('keys');
-
-let dot = document.querySelector('.fas.fa-circle.has-text-success');
-
-setFingerIndicator(dot);
 
 let paginationLinks = document.getElementsByClassName('pagination-link');
 
@@ -185,3 +121,67 @@ startButton.addEventListener('click', () => {
   lessonScreenProxy.lessonIndex = currentLesson;
   startManageUserInputs();
 });
+
+function closeLesson() {
+  stopManageUserInputs();
+  toggleScreen();
+}
+
+function hasPlayerAlreadyTyped() {
+  let firstChar = document.querySelector('.keys');
+  return firstChar.classList.contains('has-background-success') ||
+    firstChar.classList.contains('has-background-danger');
+}
+
+let closeButton = document.getElementById('close-button');
+closeButton.addEventListener('click', () => {
+  unmarkButtons();
+  markCurrentLessonButton();
+  setLessonNameOnScreen();
+  unmaximizeWindow();
+  closeLesson();
+});
+
+let previousButton = document.getElementById('previous-button');
+let nextButton = document.getElementById('next-button');
+
+let lessonButtons = [closeButton, previousButton, nextButton];
+
+for (let button of lessonButtons) {
+  button.style.transition = 'background-color 0.3s linear 0s';
+  button.addEventListener('mouseover', () => {
+    if (hasPlayerAlreadyTyped()) {
+      event.target.classList.add('is-danger');
+    }
+  });
+  button.addEventListener('mouseout', () => {
+    event.target.classList.remove('is-danger');
+  });
+}
+
+let lessonScreenProxyArgs = {
+  textId: 'text',
+  charsClass: 'keys',
+  previousButton: previousButton,
+  nextButton: nextButton
+}
+let lessonScreenProxy = lessonScreenProxyBuilder(lessonScreenProxyArgs);
+lessonScreenProxy.lessonIndex = 1;
+
+previousButton.addEventListener('click', () => {
+  --lessonScreenProxy.lessonIndex;
+  setCurrentLesson(lessonScreenProxy.lessonIndex);
+  restartManageUserInputs();
+});
+
+nextButton.addEventListener('click', () => {
+  ++lessonScreenProxy.lessonIndex;
+  setCurrentLesson(lessonScreenProxy.lessonIndex);
+  restartManageUserInputs();
+});
+
+setElementsToBePressed('keys');
+
+let dot = document.querySelector('.fas.fa-circle.has-text-success');
+
+setFingerIndicator(dot);
