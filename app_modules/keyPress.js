@@ -90,6 +90,7 @@ function startManageUserInputs() {
 }
 
 function restartManageUserInputs() {
+  indicateTheCorrectFinger(keysToBePressed[0].innerHTML);
   position = 0;
 }
 
