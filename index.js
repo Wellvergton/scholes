@@ -33,6 +33,9 @@ function hasPlayerAlreadyTyped() {
 
 let closeButton = document.getElementById('close-button');
 closeButton.addEventListener('click', () => {
+  unmarkButtons();
+  markCurrentLessonButton();
+  setLessonNameOnScreen();
   unmaximizeWindow();
   closeLesson();
 });
@@ -66,13 +69,15 @@ let lessonScreenProxy = lessonScreenProxyBuilder(lessonScreenProxyArgs);
 lessonScreenProxy.lessonIndex = 1;
 
 previousButton.addEventListener('click', () => {
-  restartManageUserInputs();
   --lessonScreenProxy.lessonIndex;
+  setCurrentLesson(lessonScreenProxy.lessonIndex);
+  restartManageUserInputs();
 });
 
 nextButton.addEventListener('click', () => {
-  restartManageUserInputs();
   ++lessonScreenProxy.lessonIndex;
+  setCurrentLesson(lessonScreenProxy.lessonIndex);
+  restartManageUserInputs();
 });
 
 setElementsToBePressed('keys');
