@@ -83,21 +83,32 @@ setFingerIndicator(dot);
 
 let paginationLinks = document.getElementsByClassName('pagination-link');
 
-function removeIsCurrentClassFromOther() {
+let currentLesson = parseInt(paginationLinks[0].innerHTML);
+
+function setCurrentLesson(lessonNumber) {
+  currentLesson = parseInt(lessonNumber);
+}
+
+function isCurrentLessonOnTheList() {
+  return [...paginationLinks].some(link => {
+    return link.innerHTML == currentLesson;
+  });
+}
+
+function markCurrentLessonButton() {
+  for (let link of paginationLinks) {
+    if (parseInt(link.innerHTML) == currentLesson) {
+      link.classList.add('is-current');
+    }
+  }
+}
+
+function unmarkButtons() {
   for (let link of paginationLinks) {
     if (link.classList.contains('is-current')) {
       link.classList.remove('is-current');
     }
   }
-}
-
-function addIsCurrentClass(element) {
-  element.classList.add('is-current');
-}
-
-let currentLesson = parseInt(document.querySelector('.is-current').innerHTML);
-function setCurrentLesson() {
-  currentLesson = parseInt(document.querySelector('.is-current').innerHTML);
 }
 
 function setLessonNameOnScreen() {
@@ -109,9 +120,9 @@ setLessonNameOnScreen();
 
 [...paginationLinks].forEach(element => {
   element.addEventListener('click', () => {
-    removeIsCurrentClassFromOther();
-    addIsCurrentClass(event.target);
-    setCurrentLesson();
+    unmarkButtons();
+    setCurrentLesson(event.target.innerHTML);
+    markCurrentLessonButton();
     setLessonNameOnScreen();
   });
 });
@@ -136,10 +147,12 @@ function decreasePaginationLinks() {
 }
 
 paginationPreviousButton.addEventListener('click', () => {
+  unmarkButtons();
   decreasePaginationLinks();
-  setCurrentLesson();
-  setLessonNameOnScreen();
   homeScreenProxy.currentLowestLink = parseInt(paginationLinks[0].innerHTML);
+  if (isCurrentLessonOnTheList()) {
+    markCurrentLessonButton();
+  }
 });
 
 function increasePaginationLinks() {
@@ -152,10 +165,12 @@ function increasePaginationLinks() {
 }
 
 paginationNextButton.addEventListener('click', () => {
+  unmarkButtons();
   increasePaginationLinks();
-  setCurrentLesson();
-  setLessonNameOnScreen();
   homeScreenProxy.currentLowestLink = parseInt(paginationLinks[0].innerHTML);
+  if (isCurrentLessonOnTheList()) {
+    markCurrentLessonButton();
+  }
 });
 
 let startButton = document.querySelector('button.button');
