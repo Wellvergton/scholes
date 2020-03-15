@@ -45,10 +45,10 @@ let nextButton = document.getElementById('next-button');
 let lessonButtons = [closeButton, previousButton, nextButton];
 
 for (let button of lessonButtons) {
+  button.style.transition = 'background-color 0.3s linear 0s';
   button.addEventListener('mouseover', () => {
     if (hasPlayerAlreadyTyped()) {
       event.target.classList.add('is-danger');
-      event.target.style.transition = 'background-color 0.3s linear 0s';
     }
   });
   button.addEventListener('mouseout', () => {
