@@ -76,7 +76,7 @@ let homeScreenProxyArgs = {
   nextButton: homeScreenNextButton
 };
 let homeScreenProxy = homeScreenProxyBuilder(homeScreenProxyArgs);
-homeScreenProxy.currentLowestLink = 1;
+homeScreenProxy.currentLowestIndex = 1;
 
 function decreasePaginationLinks() {
   if (parseInt(lessonIndexes[0].innerHTML) >= 4) {
@@ -90,7 +90,7 @@ function decreasePaginationLinks() {
 homeScreenPreviousButton.addEventListener('click', () => {
   unmarkButtons();
   decreasePaginationLinks();
-  homeScreenProxy.currentLowestLink = parseInt(lessonIndexes[0].innerHTML);
+  homeScreenProxy.currentLowestIndex = parseInt(lessonIndexes[0].innerHTML);
   if (isCurrentLessonOnTheScreen()) {
     markCurrentLessonButton();
   }
@@ -108,13 +108,13 @@ function increasePaginationLinks() {
 homeScreenNextButton.addEventListener('click', () => {
   unmarkButtons();
   increasePaginationLinks();
-  homeScreenProxy.currentLowestLink = parseInt(lessonIndexes[0].innerHTML);
+  homeScreenProxy.currentLowestIndex = parseInt(lessonIndexes[0].innerHTML);
   if (isCurrentLessonOnTheScreen()) {
     markCurrentLessonButton();
   }
 });
 
-let startButton = document.querySelector('button.button');
+let startButton = document.querySelector('.card-footer button.button');
 startButton.addEventListener('click', () => {
   maximizeWindow();
   toggleScreen();

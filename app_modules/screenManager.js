@@ -42,10 +42,10 @@ let keySets = {
 
 function homeScreenProxyBuilder(argsObj) {
   let {previousButton, nextButton} = argsObj;
-  let proxyTarget = { currentLowestLink: 1 }
+  let proxyTarget = { currentLowestIndex: 1 }
   let proxyHandler = {
     set: (target, prop, value) => {
-      if (prop == 'currentLowestLink') {
+      if (prop == 'currentLowestIndex') {
         if (value <= 3) {
           disableButton(previousButton);
           enableButton(nextButton);
