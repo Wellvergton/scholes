@@ -24,6 +24,21 @@ setScreens(document.getElementsByClassName('hero'));
 
 let lessonIndexes = document.getElementsByClassName('pagination-link');
 
+let modal = document.querySelector('.modal');
+
+function toggleModal() {
+  modal.classList.toggle('is-active');
+}
+
+let aboutButton = document.querySelector('.navbar-item > .button.is-info');
+aboutButton.addEventListener('click', toggleModal);
+
+let modalCloseButton = document.querySelector('.modal-card-head > .delete');
+modalCloseButton.addEventListener('click', toggleModal);
+
+let modalBackGround = document.querySelector('.modal-background');
+modalBackGround.addEventListener('click', toggleModal);
+
 let currentLesson = parseInt(lessonIndexes[0].innerHTML);
 
 function setCurrentLesson(lessonNumber) {

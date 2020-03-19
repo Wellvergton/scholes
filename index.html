@@ -9,7 +9,7 @@
   <script src="./index.js" type="module"></script>
   <title>Scholes</title>
 </head>
-<body>
+<body class="is-unselectable">
   <section class="hero is-fullheight">
     <div class="hero-head">
       <nav class="navbar">
@@ -27,6 +27,7 @@
         </div>
       </nav>
     </div>
+
     <div class="hero-body">
       <div class="columns is-mobile is-centered is-multiline">
         <div class="card column is-four-fifths has-text-centered">
@@ -41,6 +42,7 @@
               <p></p>
             </div>
           </div>
+
           <div class="card-footer columns">
             <div class="column is-full">
               <button class="button is-primary">
@@ -49,6 +51,7 @@
             </div>
           </div>
         </div>
+
         <nav class="pagination" role="navigation" aria-label="pagination">
           <a class="pagination-previous">
             <span class="icon">
@@ -74,7 +77,54 @@
         </nav>
       </div>
     </div>
+
+    <div class="modal">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">About</p>
+          <button class="delete" aria-label="close"></button>
+        </header>
+
+        <section class="modal-card-body has-text-centered">
+          <div class="field">
+            <p class="control has-text-centered">
+              Copyright <i class="far fa-copyright"></i> 2020 Wellvergton Marques
+              <br>
+              <a href="https://github.com/Wellvergton/scholes/blob/master/LICENSE">
+                MIT License
+              </a>
+            </p>
+          </div>
+
+          <div class="field is-grouped is-grouped-centered">
+            <p class="control">
+              <a href="https://github.com/Wellvergton/scholes/" class="button">
+                <span class="icon">
+                  <i class="fab fa-github"></i>
+                </span>
+                <span>Star</span>
+              </a>
+            </p>
+
+            <p class="control">
+              <a href="https://github.com/Wellvergton/" class="button">
+                <span class="icon">
+                  <i class="fab fa-github"></i>
+                </span>
+                <span>Follow</span>
+              </a>
+            </p>
+          </div>
+
+          <a href="https://bulma.io">
+            <img src="./_assets/made-with-bulma.png" alt="Made with Bulma" width="128" height="24">
+          </a>
+        </section>
+      </div>
+    </div>
   </section>
+
   <section id="lesson-screen" class="hero is-fullheight is-hidden">
     <div class="hero-head">
       <nav class="navbar is-spaced">
@@ -84,6 +134,7 @@
               <i class="fas fa-times fa-2x"></i>
             </span>
           </button>
+
           <div class="navbar-end">
             <button id="previous-button" class="button is-white">
               <span class="icon is-medium">
@@ -99,6 +150,7 @@
         </div>
       </nav>
     </div>
+
     <div class="hero-body">
       <div class="container columns is-mobile is-vcentered">
         <i class="fas fa-circle has-text-success"></i>
