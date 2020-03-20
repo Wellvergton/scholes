@@ -5698,7 +5698,7 @@ a.navbar-item,
   flex-shrink: 0;
   padding: 3rem 1.5rem; }
 
-button > * {
+.button > *, a > * {
   pointer-events: none; }
 
 i.fas.fa-circle.has-text-success {
