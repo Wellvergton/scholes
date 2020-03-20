@@ -1,4 +1,4 @@
-const { ipcRenderer } = require('electron');
+const { ipcRenderer, shell } = require('electron');
 
 window.unmaximizeWindow = function() {
   ipcRenderer.send('unmaximize-window');
@@ -6,4 +6,9 @@ window.unmaximizeWindow = function() {
 
 window.maximizeWindow = function() {
   ipcRenderer.send('maximize-window');
+}
+
+window.openLinkInOSBrowser = function(link) {
+  shell.openExternal(link);
+  console.log(link);
 }

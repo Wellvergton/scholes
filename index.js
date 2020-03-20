@@ -39,6 +39,16 @@ modalCloseButton.addEventListener('click', toggleModal);
 let modalBackGround = document.querySelector('.modal-background');
 modalBackGround.addEventListener('click', toggleModal);
 
+let externalLinks = document.querySelectorAll('a[href]');
+[...externalLinks].forEach((anchor) => {
+  anchor.addEventListener('click', () => {
+    event.preventDefault();
+    openLinkInOSBrowser(event.target.href);
+  });
+});
+
+window.externalLinks = externalLinks;
+
 let currentLesson = parseInt(lessonIndexes[0].innerHTML);
 
 function setCurrentLesson(lessonNumber) {
