@@ -1,21 +1,20 @@
 import { buildText } from './textBuilder.js';
 
-export { screenProxyBuilder, setScreens, toggleScreen }
+export {
+  lessonScreenProxyBuilder, homeScreenProxyBuilder, setScreens, toggleScreen,
+  keySets
+}
 
 let screens;
 
-function setScreens(elems) {
-  screens = elems;
+function setScreens(elements) {
+  screens = elements;
 }
 
 function toggleScreen() {
-  [...screens].map((i) => {
-    if (i.classList.contains('is-hidden')) {
-      i.classList.remove('is-hidden');
-    } else {
-      i.classList.add('is-hidden');
-    }
-  })
+  for (let screen of screens) {
+    screen.classList.toggle('is-hidden');
+  }
 }
 
 function disableButton(button) {
@@ -27,34 +26,61 @@ function enableButton(button) {
 }
 
 let keySets = {
-  0: 'qwert',
-  1: 'yuiop',
-  2: 'asdfg',
-  3: 'hjklç',
-  4: 'zxcvb',
-  5: 'nm,.;',
-  6: 'qwertasdfgzxcvb',
-  7: 'yuiophjklçnm,.;',
-  8: 'qwertyuiop',
-  9: 'asdfghjklç',
-  10: 'zxcvbnm,.;',
-  11: 'qwertyuiopasdfghjklçzxcvbnm,.;'
+  1: 'qwert',
+  2: 'yuiop',
+  3: 'asdfg',
+  4: 'hjklç',
+  5: 'zxcvb',
+  6: 'nm,.;',
+  7: 'qwertasdfgzxcvb',
+  8: 'yuiophjklçnm,.;',
+  9: 'qwertyuiop',
+  10: 'asdfghjklç',
+  11: 'zxcvbnm,.;',
+  12: 'qwertyuiopasdfghjklçzxcvbnm,.;'
 };
 
-function screenProxyBuilder(argsObj) {
-  let {textId, charsClass, previousButton, nexButton} = argsObj;
-  let proxyTarget = { lessonIndex: 0 };
+function homeScreenProxyBuilder(argsObj) {
+  let {previousButton, nextButton} = argsObj;
+  let proxyTarget = { currentLowestIndex: 1 }
+  let proxyHandler = {
+    set: (target, prop, value) => {
+      if (prop == 'currentLowestIndex') {
+        if (value <= 3) {
+          disableButton(previousButton);
+          enableButton(nextButton);
+        } else if (value >= 10) {
+          disableButton(nextButton);
+          enableButton(previousButton);
+        } else {
+          enableButton(previousButton);
+          enableButton(nextButton);
+        }
+      }
+
+      target[prop] = value;
+
+      return true;
+    }
+  }
+
+  return new Proxy(proxyTarget, proxyHandler);
+}
+
+function lessonScreenProxyBuilder(argsObj) {
+  let {textId, charsClass, previousButton, nextButton} = argsObj;
+  let proxyTarget = { lessonIndex: 1 };
   let proxyHandler = {
     set: (target, prop, value) => {
       if (prop == 'lessonIndex') {
-        if (value == 0) {
+        if (value == 1) {
           disableButton(previousButton);
-          enableButton(nexButton);
-        } else if (value == 11) {
-          disableButton(nexButton);
+          enableButton(nextButton);
+        } else if (value == 12) {
+          disableButton(nextButton);
           enableButton(previousButton);
         } else {
-          enableButton(nexButton);
+          enableButton(nextButton);
           enableButton(previousButton);
         }
       }

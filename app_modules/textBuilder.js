@@ -1,6 +1,6 @@
 export { buildText }
 
-String.prototype.shuffle = function () {
+String.prototype.shuffle = function() {
   let a = this.split('');
   let n = this.length;
 
@@ -14,11 +14,11 @@ String.prototype.shuffle = function () {
   return a.join('');
 }
 
-String.prototype.addBlankSpace = function () {
+String.prototype.addBlankSpace = function() {
   return this.concat(' ');
 }
 
-String.prototype.addCarriageReturn = function () {
+String.prototype.addCarriageReturn = function() {
   return this.concat('\u21B5');
 }
 

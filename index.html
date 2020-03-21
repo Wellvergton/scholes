@@ -9,8 +9,25 @@
   <script src="./index.js" type="module"></script>
   <title>Scholes</title>
 </head>
-<body>
-  <section class="hero is-fullheight is-hidden">
+<body class="is-unselectable">
+  <section class="hero is-fullheight">
+    <div class="hero-head">
+      <nav class="navbar">
+        <div class="columns is-mobile">
+          <div class="column">
+            <div class="navbar-item">
+              <img src="./_assets/image.png" width="112" height="28">
+            </div>
+          </div>
+          <div class="column has-text-right">
+            <div class="navbar-item">
+              <button class="button is-info">About</button>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+
     <div class="hero-body">
       <div class="columns is-mobile is-centered is-multiline">
         <div class="card column is-four-fifths has-text-centered">
@@ -22,19 +39,19 @@
               <img src="./_assets/image.png" alt="">
             </figure>
             <div class="content column is-full">
-              <p>
-                QWERTYUIOPASDFGHJKLÇZXCVBNM,.;
-              </p>
+              <p></p>
             </div>
           </div>
+
           <div class="card-footer columns">
             <div class="column is-full">
-              <a href="" class="button">
+              <button class="button is-primary">
                 Start
-              </a>
+              </button>
             </div>
           </div>
         </div>
+
         <nav class="pagination" role="navigation" aria-label="pagination">
           <a class="pagination-previous">
             <span class="icon">
@@ -43,13 +60,13 @@
           </a>
           <ul class="pagination-list">
             <li>
-              <a class="pagination-link">4</a>
+              <a class="pagination-link is-current">1</a>
             </li>
             <li>
-              <a class="pagination-link">5</a>
+              <a class="pagination-link">2</a>
             </li>
             <li>
-              <a class="pagination-link">6</a>
+              <a class="pagination-link">3</a>
             </li>
           </ul>
           <a class="pagination-next">
@@ -60,8 +77,55 @@
         </nav>
       </div>
     </div>
+
+    <div class="modal">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">About</p>
+          <button class="delete" aria-label="close"></button>
+        </header>
+
+        <section class="modal-card-body has-text-centered">
+          <div class="field">
+            <p class="control has-text-centered">
+              Copyright <i class="far fa-copyright"></i> 2020 Wellvergton Marques
+              <br>
+              <a href="https://github.com/Wellvergton/scholes/blob/master/LICENSE">
+                MIT License
+              </a>
+            </p>
+          </div>
+
+          <div class="field is-grouped is-grouped-centered">
+            <p class="control">
+              <a href="https://github.com/Wellvergton/scholes/" class="button">
+                <span class="icon">
+                  <i class="fab fa-github"></i>
+                </span>
+                <span>Star</span>
+              </a>
+            </p>
+
+            <p class="control">
+              <a href="https://github.com/Wellvergton/" class="button">
+                <span class="icon">
+                  <i class="fab fa-github"></i>
+                </span>
+                <span>Follow</span>
+              </a>
+            </p>
+          </div>
+
+          <a href="https://bulma.io">
+            <img src="./_assets/made-with-bulma.png" alt="Made with Bulma" width="128" height="24">
+          </a>
+        </section>
+      </div>
+    </div>
   </section>
-  <section id="lesson-screen" class="hero is-fullheight">
+
+  <section class="hero is-fullheight is-hidden">
     <div class="hero-head">
       <nav class="navbar is-spaced">
         <div class="navbar-menu">
@@ -70,6 +134,7 @@
               <i class="fas fa-times fa-2x"></i>
             </span>
           </button>
+
           <div class="navbar-end">
             <button id="previous-button" class="button is-white">
               <span class="icon is-medium">
@@ -85,8 +150,10 @@
         </div>
       </nav>
     </div>
+
     <div class="hero-body">
       <div class="container columns is-mobile is-vcentered">
+        <i class="fas fa-circle has-text-success"></i>
         <div class="column has-text-right">
           <i class="fas fa-hand-paper fa-8x fa-flip-horizontal"></i>
         </div>
