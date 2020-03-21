@@ -56,7 +56,7 @@ function setCurrentLesson(lessonNumber) {
 }
 
 function isCurrentLessonOnTheScreen() {
-  return [...lessonIndexes].some(index => {
+  return [...lessonIndexes].some((index) => {
     return index.innerHTML == currentLesson;
   });
 }
@@ -84,7 +84,7 @@ function setLessonNameOnScreen() {
 
 setLessonNameOnScreen();
 
-[...lessonIndexes].forEach(element => {
+[...lessonIndexes].forEach((element) => {
   element.addEventListener('click', () => {
     unmarkButtons();
     setCurrentLesson(event.target.innerHTML);

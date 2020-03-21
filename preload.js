@@ -10,5 +10,4 @@ window.maximizeWindow = function() {
 
 window.openLinkInOSBrowser = function(link) {
   shell.openExternal(link);
-  console.log(link);
 }
