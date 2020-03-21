@@ -40,14 +40,12 @@ let modalBackGround = document.querySelector('.modal-background');
 modalBackGround.addEventListener('click', toggleModal);
 
 let externalLinks = document.querySelectorAll('a[href]');
-[...externalLinks].forEach((anchor) => {
+for (let anchor of externalLinks) {
   anchor.addEventListener('click', () => {
     event.preventDefault();
     openLinkInOSBrowser(event.target.href);
   });
-});
-
-window.externalLinks = externalLinks;
+}
 
 let currentLesson = parseInt(lessonIndexes[0].innerHTML);
 
@@ -84,14 +82,14 @@ function setLessonNameOnScreen() {
 
 setLessonNameOnScreen();
 
-[...lessonIndexes].forEach((element) => {
-  element.addEventListener('click', () => {
+for (let index of lessonIndexes) {
+  index.addEventListener('click', () => {
     unmarkButtons();
     setCurrentLesson(event.target.innerHTML);
     markCurrentLessonButton();
     setLessonNameOnScreen();
   });
-});
+}
 
 let homeScreenPreviousButton = document.querySelector('.pagination-previous');
 let homeScreenNextButton = document.querySelector('.pagination-next');
