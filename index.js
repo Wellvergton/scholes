@@ -180,6 +180,9 @@ for (let button of lessonButtons) {
   button.addEventListener('mouseout', () => {
     event.target.classList.remove('is-danger');
   });
+  button.addEventListener('click', () => {
+    event.target.classList.remove('is-danger');
+  });
 }
 
 let lessonScreenProxyArgs = {
