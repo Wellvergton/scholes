@@ -5,6 +5,7 @@ $pagination-margin: 3rem;
 @import "./node_modules/bulma/sass/utilities/_all.sass";
 @import "./node_modules/bulma/sass/base/_all.sass";
 @import "./node_modules/bulma/sass/components/card.sass";
+@import "./node_modules/bulma/sass/components/level.sass";
 @import "./node_modules/bulma/sass/components/modal.sass";
 @import "./node_modules/bulma/sass/components/navbar.sass";
 @import "./node_modules/bulma/sass/components/pagination.sass";
@@ -12,6 +13,7 @@ $pagination-margin: 3rem;
 @import "./node_modules/bulma/sass/elements/icon.sass";
 @import "./node_modules/bulma/sass/elements/image.sass";
 @import "./node_modules/bulma/sass/elements/other.sass";
+@import "./node_modules/bulma/sass/elements/title.sass";
 @import "./node_modules/bulma/sass/form/_all.sass";
 @import "./node_modules/bulma/sass/grid/_all.sass";
 @import "./node_modules/bulma/sass/layout/hero.sass";
@@ -23,4 +25,8 @@ $pagination-margin: 3rem;
 i.fas.fa-circle.has-text-success {
   position: absolute;
   z-index: 1;
+}
+
+.hero-foot > .level {
+  padding: 1rem 0;
 }

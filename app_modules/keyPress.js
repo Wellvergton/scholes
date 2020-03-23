@@ -1,7 +1,7 @@
 export {
   startManageUserInputs, stopManageUserInputs,
   setElementsToBePressed, restartManageUserInputs,
-  setFingerIndicator
+  setFingerIndicator, setErrorCounter
 }
 
 function isTheCorrectKey(keyPressed, expectedKey) {
@@ -29,6 +29,13 @@ function markPressedKey(key) {
     }
     resolve();
   });
+}
+
+let errorCount = 0;
+
+let errorCounter;
+function setErrorCounter(element) {
+  errorCounter = element;
 }
 
 const fingers = {
@@ -92,15 +99,23 @@ function startManageUserInputs() {
 function restartManageUserInputs() {
   indicateTheCorrectFinger(keysToBePressed[0].innerHTML);
   position = 0;
+  errorCount = 0;
+  errorCounter.innerHTML = errorCount;
 }
 
 function stopManageUserInputs() {
   position = 0;
+  errorCount = 0;
+  errorCounter.innerHTML = errorCount;
   document.removeEventListener('keypress', manageUserInput);
 }
 
 async function manageUserInput(keypress) {
   await markPressedKey(keypress.key);
+  if (!isTheCorrectKey(keypress.key, keysToBePressed[position].innerHTML)) {
+    errorCount++;
+    errorCounter.innerHTML = errorCount;
+  }
   position++;
   indicateTheCorrectFinger(keysToBePressed[position].innerHTML);
   if (position == keysToBePressed.length) {

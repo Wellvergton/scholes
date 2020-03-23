@@ -1,7 +1,7 @@
 import {
   startManageUserInputs, stopManageUserInputs,
   setElementsToBePressed, restartManageUserInputs,
-  setFingerIndicator
+  setFingerIndicator, setErrorCounter
 } from './app_modules/keyPress.js';
 import {
   lessonScreenProxyBuilder, homeScreenProxyBuilder, setScreens, toggleScreen,
@@ -207,6 +207,9 @@ lessonNextButton.addEventListener('click', () => {
 });
 
 setElementsToBePressed('keys');
+
+let errorCounter = document.querySelector('.hero-foot .level-item .title');
+setErrorCounter(errorCounter);
 
 let dot = document.querySelector('.fas.fa-circle.has-text-success');
 
