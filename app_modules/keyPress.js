@@ -4,6 +4,8 @@ export {
   setFingerIndicator, setErrorCounter
 }
 
+import { startTimer, stopTimer } from './timer.js';
+
 function isTheCorrectKey(keyPressed, expectedKey) {
   if (keyPressed == 'Enter' && expectedKey == '\u21B5') {
     return true;
@@ -111,14 +113,16 @@ function stopManageUserInputs() {
 }
 
 async function manageUserInput(keypress) {
+  startTimer();
   await markPressedKey(keypress.key);
   if (!isTheCorrectKey(keypress.key, keysToBePressed[position].innerHTML)) {
     errorCount++;
     errorCounter.innerHTML = errorCount;
   }
   position++;
-  indicateTheCorrectFinger(keysToBePressed[position].innerHTML);
   if (position == keysToBePressed.length) {
+    stopTimer();
     stopManageUserInputs();
   }
+  indicateTheCorrectFinger(keysToBePressed[position].innerHTML);
 }

@@ -7,6 +7,9 @@ import {
   lessonScreenProxyBuilder, homeScreenProxyBuilder, setScreens, toggleScreen,
   keySets
 } from './app_modules/screenManager.js';
+import {
+  setTimerElement, restartScreenTimer
+} from './app_modules/timer.js';
 
 document.addEventListener('keypress', (event) => {
   if (event.code == 'Space' && event.target == document.body) {
@@ -163,6 +166,7 @@ closeButton.addEventListener('click', () => {
   setLessonNameOnScreen();
   unmaximizeWindow();
   closeLesson();
+  restartScreenTimer();
 });
 
 let lessonPreviousButton = document.getElementById('previous-button');
@@ -197,12 +201,14 @@ lessonScreenProxy.lessonIndex = 1;
 lessonPreviousButton.addEventListener('click', () => {
   --lessonScreenProxy.lessonIndex;
   setCurrentLesson(lessonScreenProxy.lessonIndex);
+  restartScreenTimer();
   restartManageUserInputs();
 });
 
 lessonNextButton.addEventListener('click', () => {
   ++lessonScreenProxy.lessonIndex;
   setCurrentLesson(lessonScreenProxy.lessonIndex);
+  restartScreenTimer();
   restartManageUserInputs();
 });
 
@@ -214,3 +220,6 @@ setErrorCounter(errorCounter);
 let dot = document.querySelector('.fas.fa-circle.has-text-success');
 
 setFingerIndicator(dot);
+
+let timer = document.querySelector('.hero-foot .level-item:last-child .title');
+setTimerElement(timer);
