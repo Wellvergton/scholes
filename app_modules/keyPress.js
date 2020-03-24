@@ -103,6 +103,7 @@ function restartManageUserInputs() {
   position = 0;
   errorCount = 0;
   errorCounter.innerHTML = errorCount;
+  document.addEventListener('keypress', manageUserInput);
 }
 
 function stopManageUserInputs() {
