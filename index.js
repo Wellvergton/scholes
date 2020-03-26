@@ -1,7 +1,7 @@
 import {
   startManageUserInputs, stopManageUserInputs,
-  setElementsToBeTyped, restartManageUserInputs,
-  setFingerIndicator, setErrorCounter, setHandsData
+  setElementsToBeTyped, setFingerIndicator,
+  setErrorCounter, setHandsData
 } from './app_modules/keyPressManager.js';
 
 import {
@@ -203,7 +203,7 @@ function changeLessonOnScreen() {
   setCurrentLesson(lessonScreenProxy.lessonIndex);
   restartScreenTimer();
   setHandsData(leftHand, rightHand);
-  restartManageUserInputs();
+  startManageUserInputs();
 }
 
 lessonPreviousButton.addEventListener('click', () => {

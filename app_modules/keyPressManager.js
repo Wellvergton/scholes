@@ -1,7 +1,7 @@
 export {
   startManageUserInputs, stopManageUserInputs,
-  setElementsToBeTyped, restartManageUserInputs,
-  setFingerIndicator, setErrorCounter, setHandsData
+  setElementsToBeTyped, setFingerIndicator,
+  setErrorCounter, setHandsData
 }
 
 import { startTimer, stopTimer } from './timer.js';
@@ -114,17 +114,11 @@ function restartCounters() {
 
 function startManageUserInputs() {
   indicateTheCorrectFinger(keysToBeTyped[0].innerHTML);
-  document.addEventListener('keypress', manageUserInput);
-}
-
-function restartManageUserInputs() {
-  indicateTheCorrectFinger(keysToBeTyped[0].innerHTML);
   restartCounters();
   document.addEventListener('keypress', manageUserInput);
 }
 
 function stopManageUserInputs() {
-  restartCounters();
   document.removeEventListener('keypress', manageUserInput);
 }
 
