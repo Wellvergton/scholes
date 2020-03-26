@@ -1,7 +1,7 @@
 export {
   startManageUserInputs, stopManageUserInputs,
   setElementsToBeTyped, restartManageUserInputs,
-  setFingerIndicator, setErrorCounter
+  setFingerIndicator, setErrorCounter, setHandsData
 }
 
 import { startTimer, stopTimer } from './timer.js';
@@ -42,43 +42,54 @@ function setErrorCounter(element) {
   errorCounter = element;
 }
 
-const fingers = {
-  leftPinky: {
-    chars: 'qaz',
-    positionOnScreen: 'top: 22.4rem; left: 3.5rem;',
-  },
-  leftRingFinger: {
-    chars: 'wsx',
-    positionOnScreen: 'top: 21rem; left: 4.86rem;',
-  },
-  leftMiddleFinger: {
-    chars: 'edc',
-    positionOnScreen: 'top: 20.4rem; left: 6.25rem;',
-  },
-  leftIndexFinger: {
-    chars: 'rfvtgb',
-    positionOnScreen: 'top: 21rem; left: 7.63rem;',
-  },
-  leftThumb: {
-    chars: ' ',
-    positionOnScreen: 'top: 24.4rem; left: 9.23rem;',
-  },
-  rightPinky: {
-    chars: 'pç;\u21B5',
-    positionOnScreen: 'top: 22.4rem; right: 3.5rem;',
-  },
-  rightRingFinger: {
-    chars: 'ol.',
-    positionOnScreen: 'top: 21rem; right: 4.86rem;',
-  },
-  rightMiddleFinger: {
-    chars: 'ik,',
-    positionOnScreen: 'top: 20.4rem; right: 6.25rem;',
-  },
-  rightIndexFinger: {
-    chars: 'ujmyhn',
-    positionOnScreen: 'top: 21rem; right: 7.63rem;',
-  },
+let top;
+let left;
+let right;
+let Fingers;
+
+function setHandsData(left, right) {
+  top = left.getBoundingClientRect().top;
+  left = left.getBoundingClientRect().left;
+  right = right.getBoundingClientRect().right;
+
+  Fingers = {
+    leftPinky: {
+      chars: 'qaz',
+      positionOnScreen: `top: ${top + 34.5}px; left: ${left + 2.125}px;`,
+    },
+    leftRingFinger: {
+      chars: 'wsx',
+      positionOnScreen: `top: ${top + 12.5}px; left: ${left + 24.025}px;`,
+    },
+    leftMiddleFinger: {
+      chars: 'edc',
+      positionOnScreen: `top: ${top + 2.5}px; left: ${left + 46.125}px;`,
+    },
+    leftIndexFinger: {
+      chars: 'rfvtgb',
+      positionOnScreen: `top: ${top + 12.5}px; left: ${left + 68.125}px;`,
+    },
+    leftThumb: {
+      chars: ' ',
+      positionOnScreen: `top: ${top + 66}px; left: ${left + 93.625}px;`,
+    },
+    rightPinky: {
+      chars: 'pç;\u21B5',
+      positionOnScreen: `top: ${top + 34.5}px; right: ${right - 1241.625}px;`,
+    },
+    rightRingFinger: {
+      chars: 'ol.',
+      positionOnScreen: `top: ${top + 12.5}px; right: ${right - 1219.625}px;`,
+    },
+    rightMiddleFinger: {
+      chars: 'ik,',
+      positionOnScreen: `top: ${top + 2.5}px; right: ${right - 1197.625}px;`,
+    },
+    rightIndexFinger: {
+      chars: 'ujmyhn',
+      positionOnScreen: `top: ${top + 12.5}px; right: ${right - 1175.425}px;`,
+    },
+  }
 }
 
 let fingerIdicator;
@@ -88,9 +99,9 @@ function setFingerIndicator(element) {
 }
 
 function indicateTheCorrectFinger(char) {
-  for (let finger in fingers) {
-    if (fingers[finger].chars.includes(char)) {
-      fingerIdicator.style = fingers[finger].positionOnScreen;
+  for (let finger in Fingers) {
+    if (Fingers[finger].chars.includes(char)) {
+      fingerIdicator.style = Fingers[finger].positionOnScreen;
     }
   }
 }

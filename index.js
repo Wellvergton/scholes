@@ -1,7 +1,7 @@
 import {
   startManageUserInputs, stopManageUserInputs,
   setElementsToBeTyped, restartManageUserInputs,
-  setFingerIndicator, setErrorCounter
+  setFingerIndicator, setErrorCounter, setHandsData
 } from './app_modules/keyPressManager.js';
 
 import {
@@ -141,11 +141,15 @@ homeScreenNextButton.addEventListener('click', () => {
   organizeLessonSelector();
 });
 
+let leftHand = document.getElementById('left-hand');
+let rightHand = document.getElementById('right-hand');
+
 let startButton = document.querySelector('.card-footer button.button');
 startButton.addEventListener('click', () => {
   maximizeWindow();
   toggleScreen();
   lessonScreenProxy.lessonIndex = currentLesson;
+  setHandsData(leftHand, rightHand);
   startManageUserInputs();
 });
 
@@ -198,6 +202,7 @@ lessonScreenProxy.lessonIndex = 1;
 function changeLessonOnScreen() {
   setCurrentLesson(lessonScreenProxy.lessonIndex);
   restartScreenTimer();
+  setHandsData(leftHand, rightHand);
   restartManageUserInputs();
 }
 
