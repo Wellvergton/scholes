@@ -1,12 +1,14 @@
 import {
   startManageUserInputs, stopManageUserInputs,
-  setElementsToBePressed, restartManageUserInputs,
+  setElementsToBeTyped, restartManageUserInputs,
   setFingerIndicator, setErrorCounter
-} from './app_modules/keyPress.js';
+} from './app_modules/keyPressManager.js';
+
 import {
   lessonScreenProxyBuilder, homeScreenProxyBuilder, setScreens, toggleScreen,
   keySets
 } from './app_modules/screenManager.js';
+
 import {
   setTimerElement, restartScreenTimer
 } from './app_modules/timer.js';
@@ -25,22 +27,20 @@ document.addEventListener('focusin', (event) => {
 
 setScreens(document.getElementsByClassName('hero'));
 
-let lessonIndexes = document.getElementsByClassName('pagination-link');
+let aboutModal = document.querySelector('.modal');
 
-let modal = document.querySelector('.modal');
-
-function toggleModal() {
-  modal.classList.toggle('is-active');
+function toggleAboutModal() {
+  aboutModal.classList.toggle('is-active');
 }
 
 let aboutButton = document.querySelector('.navbar-item > .button.is-info');
-aboutButton.addEventListener('click', toggleModal);
+aboutButton.addEventListener('click', toggleAboutModal);
 
-let modalCloseButton = document.querySelector('.modal-card-head > .delete');
-modalCloseButton.addEventListener('click', toggleModal);
+let aboutModalCloseButton = document.querySelector('.modal-card-head > .delete');
+aboutModalCloseButton.addEventListener('click', toggleAboutModal);
 
-let modalBackGround = document.querySelector('.modal-background');
-modalBackGround.addEventListener('click', toggleModal);
+let aboutModalBackGround = document.querySelector('.modal-background');
+aboutModalBackGround.addEventListener('click', toggleAboutModal);
 
 let externalLinks = document.querySelectorAll('a[href]');
 for (let anchor of externalLinks) {
@@ -50,8 +50,9 @@ for (let anchor of externalLinks) {
   });
 }
 
-let currentLesson = parseInt(lessonIndexes[0].innerHTML);
+let lessonIndexes = document.getElementsByClassName('pagination-link');
 
+let currentLesson = parseInt(lessonIndexes[0].innerHTML);
 function setCurrentLesson(lessonNumber) {
   currentLesson = parseInt(lessonNumber);
 }
@@ -62,7 +63,7 @@ function isCurrentLessonOnTheScreen() {
   });
 }
 
-function markCurrentLessonButton() {
+function markCurrentLessonSelectButton() {
   for (let index of lessonIndexes) {
     if (parseInt(index.innerHTML) == currentLesson) {
       index.classList.add('is-current');
@@ -70,7 +71,7 @@ function markCurrentLessonButton() {
   }
 }
 
-function unmarkButtons() {
+function unmarkLessonSelectButtons() {
   for (let index of lessonIndexes) {
     if (index.classList.contains('is-current')) {
       index.classList.remove('is-current');
@@ -87,9 +88,9 @@ setLessonNameOnScreen();
 
 for (let index of lessonIndexes) {
   index.addEventListener('click', () => {
-    unmarkButtons();
+    unmarkLessonSelectButtons();
     setCurrentLesson(event.target.innerHTML);
-    markCurrentLessonButton();
+    markCurrentLessonSelectButton();
     setLessonNameOnScreen();
   });
 }
@@ -104,7 +105,7 @@ let homeScreenProxyArgs = {
 let homeScreenProxy = homeScreenProxyBuilder(homeScreenProxyArgs);
 homeScreenProxy.currentLowestIndex = 1;
 
-function decreasePaginationLinks() {
+function decreaseLessonIndexes() {
   if (parseInt(lessonIndexes[0].innerHTML) >= 4) {
     for (let index of lessonIndexes) {
       let value = parseInt(index.innerHTML);
@@ -113,16 +114,20 @@ function decreasePaginationLinks() {
   }
 }
 
-homeScreenPreviousButton.addEventListener('click', () => {
-  unmarkButtons();
-  decreasePaginationLinks();
+function organizeLessonSelector() {
+  unmarkLessonSelectButtons();
   homeScreenProxy.currentLowestIndex = parseInt(lessonIndexes[0].innerHTML);
   if (isCurrentLessonOnTheScreen()) {
-    markCurrentLessonButton();
+    markCurrentLessonSelectButton();
   }
+}
+
+homeScreenPreviousButton.addEventListener('click', () => {
+  decreaseLessonIndexes();
+  organizeLessonSelector();
 });
 
-function increasePaginationLinks() {
+function increaseLessonIndexes() {
   if (parseInt(lessonIndexes[2].innerHTML) <= 9) {
     for (let index of lessonIndexes) {
       let value = parseInt(index.innerHTML);
@@ -132,12 +137,8 @@ function increasePaginationLinks() {
 }
 
 homeScreenNextButton.addEventListener('click', () => {
-  unmarkButtons();
-  increasePaginationLinks();
-  homeScreenProxy.currentLowestIndex = parseInt(lessonIndexes[0].innerHTML);
-  if (isCurrentLessonOnTheScreen()) {
-    markCurrentLessonButton();
-  }
+  increaseLessonIndexes();
+  organizeLessonSelector();
 });
 
 let startButton = document.querySelector('.card-footer button.button');
@@ -148,26 +149,22 @@ startButton.addEventListener('click', () => {
   startManageUserInputs();
 });
 
-function closeLesson() {
+let closeButton = document.getElementById('close-button');
+closeButton.addEventListener('click', () => {
+  unmarkLessonSelectButtons();
+  markCurrentLessonSelectButton();
+  setLessonNameOnScreen();
+  unmaximizeWindow();
   stopManageUserInputs();
   toggleScreen();
-}
+  restartScreenTimer();
+});
 
 function hasPlayerAlreadyTyped() {
   let firstChar = document.querySelector('.keys');
   return firstChar.classList.contains('has-background-success') ||
     firstChar.classList.contains('has-background-danger');
 }
-
-let closeButton = document.getElementById('close-button');
-closeButton.addEventListener('click', () => {
-  unmarkButtons();
-  markCurrentLessonButton();
-  setLessonNameOnScreen();
-  unmaximizeWindow();
-  closeLesson();
-  restartScreenTimer();
-});
 
 let lessonPreviousButton = document.getElementById('previous-button');
 let lessonNextButton = document.getElementById('next-button');
@@ -198,21 +195,23 @@ let lessonScreenProxyArgs = {
 let lessonScreenProxy = lessonScreenProxyBuilder(lessonScreenProxyArgs);
 lessonScreenProxy.lessonIndex = 1;
 
-lessonPreviousButton.addEventListener('click', () => {
-  --lessonScreenProxy.lessonIndex;
+function changeLessonOnScreen() {
   setCurrentLesson(lessonScreenProxy.lessonIndex);
   restartScreenTimer();
   restartManageUserInputs();
+}
+
+lessonPreviousButton.addEventListener('click', () => {
+  --lessonScreenProxy.lessonIndex;
+  changeLessonOnScreen();
 });
 
 lessonNextButton.addEventListener('click', () => {
   ++lessonScreenProxy.lessonIndex;
-  setCurrentLesson(lessonScreenProxy.lessonIndex);
-  restartScreenTimer();
-  restartManageUserInputs();
+  changeLessonOnScreen();
 });
 
-setElementsToBePressed('keys');
+setElementsToBeTyped('keys');
 
 let errorCounter = document.querySelector('.hero-foot .level-item .title');
 setErrorCounter(errorCounter);

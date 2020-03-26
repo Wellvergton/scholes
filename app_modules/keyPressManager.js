@@ -1,29 +1,29 @@
 export {
   startManageUserInputs, stopManageUserInputs,
-  setElementsToBePressed, restartManageUserInputs,
+  setElementsToBeTyped, restartManageUserInputs,
   setFingerIndicator, setErrorCounter
 }
 
 import { startTimer, stopTimer } from './timer.js';
 
-function isTheCorrectKey(keyPressed, expectedKey) {
-  if (keyPressed == 'Enter' && expectedKey == '\u21B5') {
+function isTheCorrectKey(keyTyped, expectedKey) {
+  if (keyTyped == 'Enter' && expectedKey == '\u21B5') {
     return true;
   } else {
-    return keyPressed == expectedKey;
+    return keyTyped == expectedKey;
   }
 }
 
-let keysToBePressed;
+let keysToBeTyped;
 
-function setElementsToBePressed(className) {
-  keysToBePressed = document.getElementsByClassName(className);
+function setElementsToBeTyped(className) {
+  keysToBeTyped = document.getElementsByClassName(className);
 }
 
 let position = 0;
 
-function markPressedKey(key) {
-  let elementToCompare = keysToBePressed[position];
+function markTypedKey(key) {
+  let elementToCompare = keysToBeTyped[position];
 
   return new Promise((resolve) => {
     if (isTheCorrectKey(key, elementToCompare.innerHTML)) {
@@ -102,12 +102,12 @@ function restartCounters() {
 }
 
 function startManageUserInputs() {
-  indicateTheCorrectFinger(keysToBePressed[0].innerHTML);
+  indicateTheCorrectFinger(keysToBeTyped[0].innerHTML);
   document.addEventListener('keypress', manageUserInput);
 }
 
 function restartManageUserInputs() {
-  indicateTheCorrectFinger(keysToBePressed[0].innerHTML);
+  indicateTheCorrectFinger(keysToBeTyped[0].innerHTML);
   restartCounters();
   document.addEventListener('keypress', manageUserInput);
 }
@@ -119,15 +119,15 @@ function stopManageUserInputs() {
 
 async function manageUserInput(keypress) {
   startTimer();
-  await markPressedKey(keypress.key);
-  if (!isTheCorrectKey(keypress.key, keysToBePressed[position].innerHTML)) {
+  await markTypedKey(keypress.key);
+  if (!isTheCorrectKey(keypress.key, keysToBeTyped[position].innerHTML)) {
     errorCount++;
     errorCounter.innerHTML = errorCount;
   }
   position++;
-  if (position == keysToBePressed.length) {
+  if (position == keysToBeTyped.length) {
     stopTimer();
     stopManageUserInputs();
   }
-  indicateTheCorrectFinger(keysToBePressed[position].innerHTML);
+  indicateTheCorrectFinger(keysToBeTyped[position].innerHTML);
 }
