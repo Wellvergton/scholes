@@ -145,8 +145,8 @@ let leftHand = document.getElementById('left-hand');
 let rightHand = document.getElementById('right-hand');
 
 let startButton = document.querySelector('.card-footer button.button');
-startButton.addEventListener('click', () => {
-  maximizeWindow();
+startButton.addEventListener('click', async () => {
+  await maximizeWindow();
   toggleScreen();
   lessonScreenProxy.lessonIndex = currentLesson;
   setHandsData(leftHand, rightHand);
