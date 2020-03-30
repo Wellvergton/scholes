@@ -31,13 +31,14 @@ function markTypedKey(key) {
     } else {
       elementToCompare.classList.add('has-background-danger');
     }
+
     resolve();
   });
 }
 
 let errorCount = 0;
-
 let errorCounter;
+
 function setErrorCounter(element) {
   errorCounter = element;
 }
@@ -47,10 +48,10 @@ let left;
 let right;
 let Fingers;
 
-function setHandsData(left, right) {
-  top = left.getBoundingClientRect().top;
-  left = left.getBoundingClientRect().left;
-  right = right.getBoundingClientRect().right;
+function setHandsData(leftHand, rightHand) {
+  top = leftHand.getBoundingClientRect().top;
+  left = leftHand.getBoundingClientRect().left;
+  right = rightHand.getBoundingClientRect().right;
 
   Fingers = {
     leftPinky: {
@@ -129,10 +130,13 @@ async function manageUserInput(keypress) {
     errorCount++;
     errorCounter.innerHTML = errorCount;
   }
+
   position++;
+
   if (position == keysToBeTyped.length) {
     stopTimer();
     stopManageUserInputs();
   }
+
   indicateTheCorrectFinger(keysToBeTyped[position].innerHTML);
 }

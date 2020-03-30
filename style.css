@@ -5848,3 +5848,6 @@ i.fas.fa-circle.has-text-success {
 
 .hero-foot > .level {
   padding: 1rem 0; }
+
+.navbar-menu button {
+  transition: background-color 0.3s linear 0s; }

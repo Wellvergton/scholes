@@ -1,4 +1,4 @@
-export { setTimerElement, startTimer, stopTimer, restartScreenTimer }
+export { setTimerElement, startTimer, stopTimer, clearScreenTimer }
 
 let minutes = 0;
 let seconds = 0;
@@ -26,6 +26,7 @@ function checkTime(number) {
 }
 
 let timerElement;
+
 function setTimerElement(element) {
   timerElement = element;
 }
@@ -53,7 +54,7 @@ function stopTimer() {
   intervalFunction = false;
 }
 
-function restartScreenTimer() {
+function clearScreenTimer() {
   stopTimer();
   setScreenTimer();
 }
