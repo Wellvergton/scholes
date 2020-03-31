@@ -136,6 +136,8 @@ async function manageUserInput(keypress) {
   if (position == keysToBeTyped.length) {
     stopTimer();
     stopManageUserInputs();
+
+    return;
   }
 
   indicateTheCorrectFinger(keysToBeTyped[position].innerHTML);
