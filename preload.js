@@ -16,3 +16,13 @@ window.maximizeWindow = function() {
 window.openLinkInOSBrowser = function(link) {
   shell.openExternal(link);
 }
+
+window.getRecords = function() {
+  let records = ipcRenderer.sendSync('get-records');
+
+  return records;
+}
+
+window.saveRecords = function(records) {
+  ipcRenderer.send('save-records', records);
+}

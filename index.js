@@ -4,6 +4,8 @@ import {
   setErrorCounter, setHandsData
 } from './app_modules/keyPressManager.js';
 
+import recordsManager from './app_modules/records.js';
+
 import {
   lessonScreenProxyBuilder, homeScreenProxyBuilder, setScreens, toggleScreen,
   keySets
@@ -215,7 +217,7 @@ nextLessonButton.addEventListener('click', () => {
 
 setElementsToBeTyped('keys');
 
-let errorCounter = document.querySelector('.hero-foot .level-item .title');
+let errorCounter = document.querySelector('.hero-foot .level-item:first-child .title');
 
 setErrorCounter(errorCounter);
 
@@ -226,3 +228,13 @@ setFingerIndicator(dot);
 let timer = document.querySelector('.hero-foot .level-item:last-child .title');
 
 setTimerElement(timer);
+
+
+let records = new recordsManager({
+  timer: timer,
+  errorCounter: errorCounter,
+})
+
+document.addEventListener('no-more-keys', () => {
+  records.save(lessonScreenProxy.lessonIndex);
+});

@@ -1,6 +1,6 @@
-const { app, BrowserWindow } = require('electron');
-
+const { BrowserWindow, app, ipcMain } = require('electron');
 const path = require('path');
+const fs = require('fs');
 
 require('electron-reload')(__dirname, {
   electron: path.join(__dirname, 'node_modules', '.bin', 'electron')
@@ -32,7 +32,27 @@ app.on('activate', () => {
   }
 });
 
-const { ipcMain } = require('electron');
+let userConfigPath = app.getPath('userData');
+let recordsFile = `${userConfigPath}/User Data/records.json`;
+
+if (!fs.existsSync(recordsFile)) {
+  fs.writeFileSync(recordsFile, '');
+}
+
+ipcMain.on('get-records', (event) => {
+  let recordsFileData = fs.readFileSync(recordsFile, 'utf8', (err) => {
+    if (err) throw err;
+  });
+
+  result = recordsFileData ? recordsFileData : '{}';
+
+  event.returnValue = JSON.parse(result);
+});
+ipcMain.on('save-records', (event, object) => {
+  let json = JSON.stringify(object);
+
+  fs.writeFileSync(recordsFile, json);
+});
 ipcMain.on('maximize-window', () => {
   win.resizable = true;
   win.maximize();

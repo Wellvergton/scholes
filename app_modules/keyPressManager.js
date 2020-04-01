@@ -14,6 +14,8 @@ function isTheCorrectKey(keyTyped, expectedKey) {
   }
 }
 
+let noMoreKeys = new Event('no-more-keys');
+
 let keysToBeTyped;
 
 function setElementsToBeTyped(className) {
@@ -136,6 +138,8 @@ async function manageUserInput(keypress) {
   if (position == keysToBeTyped.length) {
     stopTimer();
     stopManageUserInputs();
+
+    document.dispatchEvent(noMoreKeys);
 
     return;
   }
