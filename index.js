@@ -222,7 +222,3 @@ nextLessonButton.addEventListener('click', () => {
   ++lessonScreenProxy.lessonIndex;
   changeLessonOnScreen();
 });
-
-// document.addEventListener('no-more-keys', () => {
-//   RecordsManager.save(lessonScreenProxy.lessonIndex);
-// });
