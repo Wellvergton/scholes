@@ -1,148 +1,144 @@
-export {
-  startManageUserInputs, stopManageUserInputs,
-  setElementsToBeTyped, setFingerIndicator,
-  setErrorCounter, setHandsData
-}
+export default function keyPressManager({ keysToBeTyped, fingerIndicator,
+  errorCounter } = {}) {
 
-import { startTimer, stopTimer } from './timer.js';
+  const EventEmitter = {
+    events: new Map([['start', []], ['stop', []]]),
+    listen: function(event, callback) {
+      let previousEvents = this.events.get(event);
+      this.events.set(event, [...previousEvents, callback]);
+    },
+    emit: function(event) {
+      let listeners = this.events.get(event);
 
-function isTheCorrectKey(keyTyped, expectedKey) {
-  if (keyTyped == 'Enter' && expectedKey == '\u21B5') {
-    return true;
-  } else {
-    return keyTyped == expectedKey;
+      if (listeners.length > 0) {
+        listeners.forEach((event) => event());
+      }
+    },
   }
-}
 
-let noMoreKeys = new Event('no-more-keys');
+  function on(event, callback) {
+    EventEmitter.listen(event, callback);
+  }
 
-let keysToBeTyped;
-
-function setElementsToBeTyped(className) {
-  keysToBeTyped = document.getElementsByClassName(className);
-}
-
-let position = 0;
-
-function markTypedKey(key) {
-  let elementToCompare = keysToBeTyped[position];
-
-  return new Promise((resolve) => {
-    if (isTheCorrectKey(key, elementToCompare.innerHTML)) {
-      elementToCompare.classList.add('has-background-success');
+  function isTheCorrectKey(keyTyped, expectedKey) {
+    if (keyTyped == 'Enter' && expectedKey == '\u21B5') {
+      return true;
     } else {
-      elementToCompare.classList.add('has-background-danger');
-    }
-
-    resolve();
-  });
-}
-
-let errorCount = 0;
-let errorCounter;
-
-function setErrorCounter(element) {
-  errorCounter = element;
-}
-
-let top;
-let left;
-let right;
-let Fingers;
-
-function setHandsData(leftHand, rightHand) {
-  top = leftHand.getBoundingClientRect().top;
-  left = leftHand.getBoundingClientRect().left;
-  right = rightHand.getBoundingClientRect().right;
-
-  Fingers = {
-    leftPinky: {
-      chars: 'qaz',
-      positionOnScreen: `top: ${top + 34.5}px; left: ${left + 2.125}px;`,
-    },
-    leftRingFinger: {
-      chars: 'wsx',
-      positionOnScreen: `top: ${top + 12.5}px; left: ${left + 24.025}px;`,
-    },
-    leftMiddleFinger: {
-      chars: 'edc',
-      positionOnScreen: `top: ${top + 2.5}px; left: ${left + 46.125}px;`,
-    },
-    leftIndexFinger: {
-      chars: 'rfvtgb',
-      positionOnScreen: `top: ${top + 12.5}px; left: ${left + 68.125}px;`,
-    },
-    leftThumb: {
-      chars: ' ',
-      positionOnScreen: `top: ${top + 66}px; left: ${left + 93.625}px;`,
-    },
-    rightPinky: {
-      chars: 'pç;\u21B5',
-      positionOnScreen: `top: ${top + 34.5}px; right: ${right - 1241.625}px;`,
-    },
-    rightRingFinger: {
-      chars: 'ol.',
-      positionOnScreen: `top: ${top + 12.5}px; right: ${right - 1219.625}px;`,
-    },
-    rightMiddleFinger: {
-      chars: 'ik,',
-      positionOnScreen: `top: ${top + 2.5}px; right: ${right - 1197.625}px;`,
-    },
-    rightIndexFinger: {
-      chars: 'ujmyhn',
-      positionOnScreen: `top: ${top + 12.5}px; right: ${right - 1175.425}px;`,
-    },
-  }
-}
-
-let fingerIdicator;
-
-function setFingerIndicator(element) {
-  fingerIdicator = element;
-}
-
-function indicateTheCorrectFinger(char) {
-  for (let finger in Fingers) {
-    if (Fingers[finger].chars.includes(char)) {
-      fingerIdicator.style = Fingers[finger].positionOnScreen;
+      return keyTyped == expectedKey;
     }
   }
-}
 
-function restartCounters() {
-  position = 0;
-  errorCount = 0;
-  errorCounter.innerHTML = errorCount;
-}
+  let noMoreKeysEvent = new Event('no-more-keys');
+  let position = 0;
 
-function startManageUserInputs() {
-  indicateTheCorrectFinger(keysToBeTyped[0].innerHTML);
-  restartCounters();
-  document.addEventListener('keypress', manageUserInput);
-}
+  function markTypedKey(key) {
+    let elementToCompare = keysToBeTyped[position];
 
-function stopManageUserInputs() {
-  document.removeEventListener('keypress', manageUserInput);
-}
+    return new Promise((resolve) => {
+      if (isTheCorrectKey(key, elementToCompare.innerHTML)) {
+        elementToCompare.classList.add('has-background-success');
+      } else {
+        elementToCompare.classList.add('has-background-danger');
+      }
 
-async function manageUserInput(keypress) {
-  startTimer();
-  await markTypedKey(keypress.key);
-  if (!isTheCorrectKey(keypress.key, keysToBeTyped[position].innerHTML)) {
-    errorCount++;
+      resolve();
+    });
+  }
+
+  let errorCount = 0;
+  let handsTop;
+  let handsLeft;
+  let handsRight;
+  let Fingers;
+
+  function setHandsPosition(left, right) {
+    handsTop = left.getBoundingClientRect().top;
+    handsLeft = left.getBoundingClientRect().left;
+    handsRight = right.getBoundingClientRect().right;
+    Fingers = {
+      leftPinky: {
+        chars: 'qaz',
+        positionOnScreen: `top: ${handsTop + 34.5}px; left: ${handsLeft + 2.125}px;`,
+      },
+      leftRingFinger: {
+        chars: 'wsx',
+        positionOnScreen: `top: ${handsTop + 12.5}px; left: ${handsLeft + 24.025}px;`,
+      },
+      leftMiddleFinger: {
+        chars: 'edc',
+        positionOnScreen: `top: ${handsTop + 2.5}px; left: ${handsLeft + 46.125}px;`,
+      },
+      leftIndexFinger: {
+        chars: 'rfvtgb',
+        positionOnScreen: `top: ${handsTop + 12.5}px; left: ${handsLeft + 68.125}px;`,
+      },
+      leftThumb: {
+        chars: ' ',
+        positionOnScreen: `top: ${handsTop + 66}px; left: ${handsLeft + 93.625}px;`,
+      },
+      rightPinky: {
+        chars: 'pç;\u21B5',
+        positionOnScreen: `top: ${handsTop + 34.5}px; right: ${handsRight - 1241.625}px;`,
+      },
+      rightRingFinger: {
+        chars: 'ol.',
+        positionOnScreen: `top: ${handsTop + 12.5}px; right: ${handsRight - 1219.625}px;`,
+      },
+      rightMiddleFinger: {
+        chars: 'ik,',
+        positionOnScreen: `top: ${handsTop + 2.5}px; right: ${handsRight - 1197.625}px;`,
+      },
+      rightIndexFinger: {
+        chars: 'ujmyhn',
+        positionOnScreen: `top: ${handsTop + 12.5}px; right: ${handsRight - 1175.425}px;`,
+      },
+    }
+  }
+
+  function indicateTheCorrectFinger(char) {
+    for (let finger in Fingers) {
+      if (Fingers[finger].chars.includes(char)) {
+        fingerIndicator.style = Fingers[finger].positionOnScreen;
+      }
+    }
+  }
+
+  function restartCounters() {
+    position = 0;
+    errorCount = 0;
     errorCounter.innerHTML = errorCount;
   }
 
-  position++;
-
-  if (position == keysToBeTyped.length) {
-    stopTimer();
-    stopManageUserInputs();
-
-    document.dispatchEvent(noMoreKeys);
-
-    return;
+  function startManageUserInputs() {
+    indicateTheCorrectFinger(keysToBeTyped[0].innerHTML);
+    restartCounters();
+    document.addEventListener('keypress', manageUserInput);
   }
 
-  indicateTheCorrectFinger(keysToBeTyped[position].innerHTML);
+  function stopManageUserInputs() {
+    document.removeEventListener('keypress', manageUserInput);
+  }
+
+  async function manageUserInput(keypress) {
+    EventEmitter.emit('start');
+    await markTypedKey(keypress.key);
+    if (!isTheCorrectKey(keypress.key, keysToBeTyped[position].innerHTML)) {
+      errorCount++;
+      errorCounter.innerHTML = errorCount;
+    }
+
+    position++;
+
+    if (position == keysToBeTyped.length) {
+      EventEmitter.emit('stop');
+      stopManageUserInputs();
+      document.dispatchEvent(noMoreKeysEvent);
+
+      return;
+    }
+
+    indicateTheCorrectFinger(keysToBeTyped[position].innerHTML);
+  }
+
+  return { startManageUserInputs, stopManageUserInputs, setHandsPosition, on }
 }

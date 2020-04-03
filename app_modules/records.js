@@ -1,4 +1,4 @@
-export default function recordsManager({ timer, errorCounter } = {}) {
+export default function RecordsManager({ timer, errorCounter } = {}) {
 
   function timeInSeconds(time) {
     let fields = time.split(':');
@@ -37,5 +37,5 @@ export default function recordsManager({ timer, errorCounter } = {}) {
     }
   }
 
-  return { save };
+  return { save }
 }
