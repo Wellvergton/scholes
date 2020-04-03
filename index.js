@@ -29,8 +29,13 @@ let KeyPressManager = keyPressManager({
 let timerElement = document.querySelector('.hero-foot .level-item:last-child .title');
 let Timer = timer(timerElement);
 
+let RecordsManager = recordsManager({
+  timer: timerElement,
+  errorCounter: errorCounter,
+})
+
 KeyPressManager.on('start', Timer.startTimer);
-KeyPressManager.on('stop', Timer.clearScreenTimer);
+KeyPressManager.on('stop', [Timer.clearScreenTimer, RecordsManager.save]);
 
 let screens = document.getElementsByClassName('hero');
 let ScreenManager = screenManager(screens);
@@ -218,11 +223,6 @@ nextLessonButton.addEventListener('click', () => {
   changeLessonOnScreen();
 });
 
-let RecordsManager = recordsManager({
-  timer: timerElement,
-  errorCounter: errorCounter,
-})
-
-document.addEventListener('no-more-keys', () => {
-  RecordsManager.save(lessonScreenProxy.lessonIndex);
-});
+// document.addEventListener('no-more-keys', () => {
+//   RecordsManager.save(lessonScreenProxy.lessonIndex);
+// });

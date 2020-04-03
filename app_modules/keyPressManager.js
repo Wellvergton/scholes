@@ -3,9 +3,9 @@ export default function keyPressManager({ keysToBeTyped, fingerIndicator,
 
   const EventEmitter = {
     events: new Map([['start', []], ['stop', []]]),
-    listen: function(event, callback) {
+    listen: function(event, callbacks) {
       let previousEvents = this.events.get(event);
-      this.events.set(event, [...previousEvents, callback]);
+      this.events.set(event, [...previousEvents.concat(callbacks)]);
     },
     emit: function(event) {
       let listeners = this.events.get(event);
@@ -16,8 +16,8 @@ export default function keyPressManager({ keysToBeTyped, fingerIndicator,
     },
   }
 
-  function on(event, callback) {
-    EventEmitter.listen(event, callback);
+  function on(event, callbacks) {
+    EventEmitter.listen(event, callbacks);
   }
 
   function isTheCorrectKey(keyTyped, expectedKey) {
@@ -28,7 +28,6 @@ export default function keyPressManager({ keysToBeTyped, fingerIndicator,
     }
   }
 
-  let noMoreKeysEvent = new Event('no-more-keys');
   let position = 0;
 
   function markTypedKey(key) {
@@ -132,7 +131,6 @@ export default function keyPressManager({ keysToBeTyped, fingerIndicator,
     if (position == keysToBeTyped.length) {
       EventEmitter.emit('stop');
       stopManageUserInputs();
-      document.dispatchEvent(noMoreKeysEvent);
 
       return;
     }
