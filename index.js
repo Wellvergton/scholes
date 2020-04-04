@@ -137,8 +137,12 @@ lessonNavBar.addEventListener('mouseover', (event) => {
 
 previousLessonButton.addEventListener('click', () => {
   LessonScreen.previousLesson();
+  Timer.clearScreenTimer();
+  errorCounter.innerHTML = '0';
 });
 
 nextLessonButton.addEventListener('click', () => {
   LessonScreen.nextLesson();
+  Timer.clearScreenTimer();
+  errorCounter.innerHTML = '0';
 });

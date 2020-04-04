@@ -6,9 +6,9 @@ export default function lessonScreenManager({
   previousLessonButton,
   nextLessonButton,
 } = {}) {
-  let TextBuilder = textBuilder(textElement);
+  const TextBuilder = textBuilder(textElement);
   let currentLesson;
-  let lessons = {
+  const lessons = {
     1: 'qwert',
     2: 'yuiop',
     3: 'asdfg',
@@ -31,8 +31,8 @@ export default function lessonScreenManager({
     button.removeAttribute('disabled');
   }
 
-  let proxyTarget = { lessonNumber: 1 };
-  let proxyHandler = {
+  const proxyTarget = { lessonNumber: 1 };
+  const proxyHandler = {
     set: (target, prop, value) => {
       if (prop === 'lessonNumber') {
         currentLesson = value;
@@ -54,7 +54,7 @@ export default function lessonScreenManager({
       return true;
     }
   }
-  let lessonProxy = new Proxy(proxyTarget, proxyHandler);
+  const lessonProxy = new Proxy(proxyTarget, proxyHandler);
 
   function build(number) {
     lessonProxy.lessonNumber = parseInt(number);

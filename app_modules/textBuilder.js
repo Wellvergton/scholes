@@ -53,14 +53,8 @@ export default function textBuilder(textElement) {
   span.className = 'keys';
   let lineBreak = document.createElement('br');
 
-  // function setTextElement(elementId) {
-  //   return document.getElementById(elementId);
-  // }
-
   function build(keySet) {
-    // let text = setTextElement(textElementId);
     textElement.innerHTML = '';
-    // span.className = charElementsClass;
     let rawText = build600CharScrambledWord(keySet);
     let splitedText = splitWordWithBlankOrCarriage(rawText);
 

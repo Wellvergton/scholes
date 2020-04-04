@@ -1,8 +1,8 @@
 export default function homeScreenManager({ homeScreenElement,
   lessonsIndexesElements, lessonNameElement, previousLessonsButton,
   nextLessonsButton } = {}) {
-  let selectedLesson = 1;
-  let lessons = {
+  let selectedLesson;
+  const lessons = {
     1: 'qwert',
     2: 'yuiop',
     3: 'asdfg',
@@ -65,8 +65,8 @@ export default function homeScreenManager({ homeScreenElement,
     button.removeAttribute('disabled');
   }
 
-  let proxyTarget = { lessonNumber: 1, lessonIndexPage: 1 }
-  let proxyHandler = {
+  const proxyTarget = { lessonNumber: 1, lessonIndexPage: 1 }
+  const proxyHandler = {
     set: (target, prop, value) => {
       if (prop === 'lessonNumber') {
         selectedLesson = value;
@@ -104,7 +104,7 @@ export default function homeScreenManager({ homeScreenElement,
       return true;
     }
   }
-  let lessonProxy = new Proxy(proxyTarget, proxyHandler);
+  const lessonProxy = new Proxy(proxyTarget, proxyHandler);
 
   function build(number) {
     lessonProxy.lessonNumber = number;
