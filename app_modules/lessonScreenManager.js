@@ -7,8 +7,8 @@ export default function lessonScreenManager({
   nextLessonButton,
 } = {}) {
   const TextBuilder = textBuilder(textElement);
-  let currentLesson;
-  const lessons = {
+  const Properties = { currentLesson: 1 };
+  const Lessons = {
     1: 'qwert',
     2: 'yuiop',
     3: 'asdfg',
@@ -31,11 +31,10 @@ export default function lessonScreenManager({
     button.removeAttribute('disabled');
   }
 
-  const proxyTarget = { lessonNumber: 1 };
   const proxyHandler = {
     set: (target, prop, value) => {
-      if (prop === 'lessonNumber') {
-        currentLesson = value;
+      if (prop === 'currentLesson') {
+        target[prop] = value;
 
         if (value === 1) {
           disableButton(previousLessonButton);
@@ -49,35 +48,33 @@ export default function lessonScreenManager({
         }
       }
 
-      target[prop] = value;
-
       return true;
     }
   }
-  const lessonProxy = new Proxy(proxyTarget, proxyHandler);
+  const lessonProxy = new Proxy(Properties, proxyHandler);
 
   function build(number) {
-    lessonProxy.lessonNumber = parseInt(number);
-    TextBuilder.build(lessons[currentLesson]);
+    lessonProxy.currentLesson = parseInt(number);
+    TextBuilder.build(Lessons[Properties.currentLesson]);
     lessonScreenElement.classList.remove('is-hidden');
   }
 
   function destroy() {
     lessonScreenElement.classList.add('is-hidden');
-    return currentLesson;
+    return Properties.currentLesson;
   }
 
   function nextLesson() {
-    if (lessonProxy.lessonNumber < 12) {
-      ++lessonProxy.lessonNumber;
-      TextBuilder.build(lessons[currentLesson]);
+    if (lessonProxy.currentLesson < 12) {
+      ++lessonProxy.currentLesson;
+      TextBuilder.build(Lessons[Properties.currentLesson]);
     }
   }
 
   function previousLesson() {
-    if (lessonProxy.lessonNumber > 1) {
-      --lessonProxy.lessonNumber;
-      TextBuilder.build(lessons[currentLesson]);
+    if (lessonProxy.currentLesson > 1) {
+      --lessonProxy.currentLesson;
+      TextBuilder.build(Lessons[Properties.currentLesson]);
     }
   }
 

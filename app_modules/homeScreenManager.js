@@ -1,8 +1,8 @@
 export default function homeScreenManager({ homeScreenElement,
   lessonsIndexesElements, lessonNameElement, previousLessonsButton,
   nextLessonsButton } = {}) {
-  let selectedLesson;
-  const lessons = {
+  const Properties = { selectedLesson: 1, lessonIndexPage: 1 }
+  const Lessons = {
     1: 'qwert',
     2: 'yuiop',
     3: 'asdfg',
@@ -19,7 +19,7 @@ export default function homeScreenManager({ homeScreenElement,
 
   function markLessonSelectedButton() {
     for (let index of lessonsIndexesElements) {
-      if (parseInt(index.innerHTML) == selectedLesson) {
+      if (parseInt(index.innerHTML) == Properties.selectedLesson) {
         index.classList.add('is-current');
       }
     }
@@ -34,12 +34,12 @@ export default function homeScreenManager({ homeScreenElement,
   }
 
   function setLessonNameOnScreen() {
-    lessonNameElement.innerHTML = lessons[selectedLesson].toUpperCase();
+    lessonNameElement.innerHTML = Lessons[Properties.selectedLesson].toUpperCase();
   }
 
   function isCurrentLessonOnTheScreen() {
     return [...lessonsIndexesElements].some((index) => {
-      return index.innerHTML == selectedLesson;
+      return index.innerHTML == Properties.selectedLesson;
     });
   }
 
@@ -65,11 +65,10 @@ export default function homeScreenManager({ homeScreenElement,
     button.removeAttribute('disabled');
   }
 
-  const proxyTarget = { lessonNumber: 1, lessonIndexPage: 1 }
   const proxyHandler = {
     set: (target, prop, value) => {
-      if (prop === 'lessonNumber') {
-        selectedLesson = value;
+      if (prop === 'selectedLesson') {
+        target[prop] = value;
         unmarkLessonSelectedButtons();
         markLessonSelectedButton();
         setLessonNameOnScreen();
@@ -97,17 +96,16 @@ export default function homeScreenManager({ homeScreenElement,
         if (isCurrentLessonOnTheScreen()) {
           markLessonSelectedButton();
         }
+        target[prop] = value;
       }
-
-      target[prop] = value;
 
       return true;
     }
   }
-  const lessonProxy = new Proxy(proxyTarget, proxyHandler);
+  const lessonProxy = new Proxy(Properties, proxyHandler);
 
   function build(number) {
-    lessonProxy.lessonNumber = number;
+    lessonProxy.selectedLesson = number;
     lessonProxy.lessonIndexPage = Math.ceil(number / 3);
     homeScreenElement.classList.remove('is-hidden');
   }
@@ -117,7 +115,7 @@ export default function homeScreenManager({ homeScreenElement,
   }
 
   function selectLesson(number) {
-    lessonProxy.lessonNumber = parseInt(number);
+    lessonProxy.selectedLesson = parseInt(number);
   }
 
   function previousLessons() {
