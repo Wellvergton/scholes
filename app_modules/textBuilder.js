@@ -1,4 +1,4 @@
-export default function TextBuider() {
+export default function textBuilder(textElement) {
   String.prototype.shuffle = function() {
     let a = this.split('');
     let n = this.length;
@@ -50,25 +50,25 @@ export default function TextBuider() {
   }
 
   let span = document.createElement('span');
+  span.className = 'keys';
   let lineBreak = document.createElement('br');
 
-  function setTextElement(elementId) {
-    return document.getElementById(elementId);
-  }
+  // function setTextElement(elementId) {
+  //   return document.getElementById(elementId);
+  // }
 
-  function build(keySet, textElementId, charElementsClass) {
-    let text = setTextElement(textElementId);
-    span.className = charElementsClass;
+  function build(keySet) {
+    // let text = setTextElement(textElementId);
+    textElement.innerHTML = '';
+    // span.className = charElementsClass;
     let rawText = build600CharScrambledWord(keySet);
     let splitedText = splitWordWithBlankOrCarriage(rawText);
 
-    text.innerHTML = '';
-
     for (let i = 0; i < splitedText.length; i++) {
-      text.appendChild(span.cloneNode()).innerHTML = splitedText[i];
+      textElement.appendChild(span.cloneNode()).innerHTML = splitedText[i];
 
       if (splitedText[i] == '\u21B5') {
-        text.appendChild(lineBreak.cloneNode());
+        textElement.appendChild(lineBreak.cloneNode());
       }
     }
   }

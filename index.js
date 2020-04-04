@@ -1,7 +1,26 @@
+import homeScreenManager from './app_modules/homeScreenManager.js';
 import keyPressManager from './app_modules/keyPressManager.js';
+import lessonScreenManager from "./app_modules/lessonScreenManager.js";
 import recordsManager from './app_modules/records.js';
-import screenManager from './app_modules/screenManager.js';
 import timer from './app_modules/timer.js';
+
+const HomeScreen = homeScreenManager({
+  homeScreenElement: document.getElementById('home-screen'),
+  lessonsIndexesElements: document.getElementsByClassName('pagination-link'),
+  lessonNameElement: document.getElementById('lesson-name'),
+  nextLessonsButton: document.querySelector('.pagination-next'),
+  previousLessonsButton: document.querySelector('.pagination-previous'),
+});
+
+let previousLessonButton = document.getElementById('previous-button');
+let nextLessonButton = document.getElementById('next-button');
+
+const LessonScreen = lessonScreenManager({
+  lessonScreenElement: document.getElementById('lesson-screen'),
+  textElement: document.getElementById('text'),
+  previousLessonButton: previousLessonButton,
+  nextLessonButton: nextLessonButton,
+});
 
 document.addEventListener('keypress', (event) => {
   if (event.code == 'Space' && event.target == document.body) {
@@ -15,30 +34,25 @@ document.addEventListener('focusin', (event) => {
   }
 });
 
-let keys = document.getElementsByClassName('keys');
-let dot = document.querySelector('.fas.fa-circle.has-text-success');
-let errorCounter = document.querySelector('.hero-foot .level-item:first-child .title');
-let leftHand = document.getElementById('left-hand');
-let rightHand = document.getElementById('right-hand');
-let KeyPressManager = keyPressManager({
-  keysToBeTyped: keys,
-  fingerIndicator: dot,
+let errorCounter = document.getElementById('error-counter');
+
+const KeyPressManager = keyPressManager({
+  keysToBeTyped: document.getElementsByClassName('keys'),
+  fingerIndicator: document.getElementById('dot'),
   errorCounter: errorCounter,
 });
 
-let timerElement = document.querySelector('.hero-foot .level-item:last-child .title');
-let Timer = timer(timerElement);
+let timerElement = document.getElementById('timer');
 
-let RecordsManager = recordsManager({
+const Timer = timer(timerElement);
+
+const Records = recordsManager({
   timer: timerElement,
   errorCounter: errorCounter,
 })
 
 KeyPressManager.on('start', Timer.startTimer);
-KeyPressManager.on('stop', [Timer.clearScreenTimer, RecordsManager.save]);
-
-let screens = document.getElementsByClassName('hero');
-let ScreenManager = screenManager(screens);
+KeyPressManager.on('stop', [Timer.clearScreenTimer, Records.save]);
 
 let aboutModal = document.querySelector('.modal');
 
@@ -61,101 +75,30 @@ aboutModal.addEventListener('click', (event) => {
   }
 });
 
-let lessonIndexes = document.getElementsByClassName('pagination-link');
-let currentLesson = parseInt(lessonIndexes[0].innerHTML);
+HomeScreen.build(1);
 
-function setCurrentLesson(lessonNumber) {
-  currentLesson = parseInt(lessonNumber);
-}
+let lessonSelector = document.getElementById('lesson-selector');
 
-function isCurrentLessonOnTheScreen() {
-  return [...lessonIndexes].some((index) => {
-    return index.innerHTML == currentLesson;
-  });
-}
-
-function markCurrentLessonSelectedButton() {
-  for (let index of lessonIndexes) {
-    if (parseInt(index.innerHTML) == currentLesson) {
-      index.classList.add('is-current');
-    }
-  }
-}
-
-function unmarkLessonSelectedButtons() {
-  for (let index of lessonIndexes) {
-    if (index.classList.contains('is-current')) {
-      index.classList.remove('is-current');
-    }
-  }
-}
-
-function setLessonNameOnScreen() {
-  let element = document.querySelector('.content > p');
-  element.innerHTML = ScreenManager.keySets[currentLesson].toUpperCase();
-}
-
-setLessonNameOnScreen();
-
-let pagination = document.querySelector('nav.pagination');
-
-pagination.addEventListener('click', (event) => {
+lessonSelector.addEventListener('click', (event) => {
   let classList = event.target.classList;
 
   if (classList.contains('pagination-link')) {
-    unmarkLessonSelectedButtons();
-    setCurrentLesson(event.target.innerHTML);
-    markCurrentLessonSelectedButton();
-    setLessonNameOnScreen();
+    HomeScreen.selectLesson(event.target.innerHTML);
   } else if (classList.contains('pagination-previous')) {
-    decreaseLessonIndexes();
+    HomeScreen.previousLessons();
   } else if (classList.contains('pagination-next')) {
-    increaseLessonIndexes();
+    HomeScreen.nextLessons();
   }
-
-  organizeLessonSelector();
 });
 
-let homeScreenProxyArgs = {
-  previousButton: document.querySelector('.pagination-previous'),
-  nextButton: document.querySelector('.pagination-next')
-};
-let homeScreenProxy = ScreenManager.homeScreenProxyBuilder(homeScreenProxyArgs);
-
-homeScreenProxy.currentLowestIndex = 1;
-
-function decreaseLessonIndexes() {
-  if (parseInt(lessonIndexes[0].innerHTML) >= 4) {
-    for (let index of lessonIndexes) {
-      let value = parseInt(index.innerHTML);
-      index.innerHTML = value - 3;
-    }
-  }
-}
-
-function organizeLessonSelector() {
-  unmarkLessonSelectedButtons();
-  homeScreenProxy.currentLowestIndex = parseInt(lessonIndexes[0].innerHTML);
-
-  if (isCurrentLessonOnTheScreen()) {
-    markCurrentLessonSelectedButton();
-  }
-}
-
-function increaseLessonIndexes() {
-  if (parseInt(lessonIndexes[2].innerHTML) <= 9) {
-    for (let index of lessonIndexes) {
-      let value = parseInt(index.innerHTML);
-      index.innerHTML = value + 3;
-    }
-  }
-}
-let startButton = document.querySelector('.card-footer button.button');
+let startButton = document.getElementById('start-button');
+let leftHand = document.getElementById('left-hand');
+let rightHand = document.getElementById('right-hand');
 
 startButton.addEventListener('click', async () => {
+  HomeScreen.destroy();
   await maximizeWindow();
-  ScreenManager.toggleScreen();
-  lessonScreenProxy.lessonIndex = currentLesson;
+  LessonScreen.build(document.querySelector('.is-current').innerHTML);
   KeyPressManager.setHandsPosition(leftHand, rightHand)
   KeyPressManager.startManageUserInputs();
 });
@@ -163,12 +106,10 @@ startButton.addEventListener('click', async () => {
 let closeLessonButton = document.getElementById('close-button');
 
 closeLessonButton.addEventListener('click', () => {
-  unmarkLessonSelectedButtons();
-  markCurrentLessonSelectedButton();
-  setLessonNameOnScreen();
+  let lesson = LessonScreen.destroy();
   unmaximizeWindow();
+  HomeScreen.build(lesson);
   KeyPressManager.stopManageUserInputs();
-  ScreenManager.toggleScreen();
   Timer.clearScreenTimer();
 });
 
@@ -178,9 +119,7 @@ function hasPlayerAlreadyTyped() {
     firstChar.classList.contains('has-background-danger');
 }
 
-let previousLessonButton = document.getElementById('previous-button');
-let nextLessonButton = document.getElementById('next-button');
-let lessonNavBar = document.querySelector('.hero-head .navbar .navbar-menu');
+let lessonNavBar = document.getElementById('lesson-nav-bar');
 
 lessonNavBar.addEventListener('mouseover', (event) => {
   if (event.target.tagName == 'BUTTON' && hasPlayerAlreadyTyped()) {
@@ -196,29 +135,10 @@ lessonNavBar.addEventListener('mouseover', (event) => {
   });
 });
 
-let lessonScreenProxyArgs = {
-  textId: 'text',
-  charsClass: 'keys',
-  previousButton: previousLessonButton,
-  nextButton: nextLessonButton
-}
-let lessonScreenProxy = ScreenManager.lessonScreenProxyBuilder(lessonScreenProxyArgs);
-
-lessonScreenProxy.lessonIndex = 1;
-
-function changeLessonOnScreen() {
-  setCurrentLesson(lessonScreenProxy.lessonIndex);
-  Timer.clearScreenTimer();
-  KeyPressManager.setHandsPosition(leftHand, rightHand)
-  KeyPressManager.startManageUserInputs();
-}
-
 previousLessonButton.addEventListener('click', () => {
-  --lessonScreenProxy.lessonIndex;
-  changeLessonOnScreen();
+  LessonScreen.previousLesson();
 });
 
 nextLessonButton.addEventListener('click', () => {
-  ++lessonScreenProxy.lessonIndex;
-  changeLessonOnScreen();
+  LessonScreen.nextLesson();
 });

@@ -10,7 +10,7 @@
   <title>Scholes</title>
 </head>
 <body class="is-unselectable">
-  <section class="hero is-fullheight">
+  <section id="home-screen" class="hero is-fullheight is-hidden">
     <div class="hero-head">
       <nav class="navbar">
         <div class="columns is-mobile">
@@ -39,7 +39,7 @@
               <img src="./_assets/image.png" alt="">
             </figure>
             <div class="content column is-full">
-              <p></p>
+              <p id="lesson-name"></p>
             </div>
           </div>
 
@@ -52,7 +52,7 @@
           </div>
         </div>
 
-        <nav class="pagination" role="navigation" aria-label="pagination">
+        <nav id="lesson-selector" class="pagination" role="navigation" aria-label="pagination">
           <a class="pagination-previous">
             <span class="icon">
               <i class="fas fa-chevron-left"></i>
@@ -60,7 +60,7 @@
           </a>
           <ul class="pagination-list">
             <li>
-              <a class="pagination-link is-current">1</a>
+              <a class="pagination-link">1</a>
             </li>
             <li>
               <a class="pagination-link">2</a>
@@ -99,7 +99,7 @@
 
           <div class="field is-grouped is-grouped-centered">
             <p class="control">
-              <a href="https://github.com/Wellvergton/scholes/" class="button">
+              <a id="start-button" href="https://github.com/Wellvergton/scholes/" class="button">
                 <span class="icon">
                   <i class="fab fa-github"></i>
                 </span>
@@ -125,10 +125,10 @@
     </div>
   </section>
 
-  <section class="hero is-fullheight is-hidden">
+  <section id="lesson-screen" class="hero is-fullheight is-hidden">
     <div class="hero-head">
       <nav class="navbar is-spaced">
-        <div class="navbar-menu">
+        <div id="lesson-nav-bar" class="navbar-menu">
           <button id="close-button" class="button is-white">
             <span class="icon is-medium">
               <i class="fas fa-times fa-2x"></i>
@@ -153,7 +153,7 @@
 
     <div class="hero-body">
       <div class="container columns is-mobile is-vcentered">
-        <i class="fas fa-circle has-text-success"></i>
+        <i id="dot" class="fas fa-circle has-text-success"></i>
         <div class="column has-text-right">
           <i id="left-hand" class="fas fa-hand-paper fa-8x fa-flip-horizontal"></i>
         </div>
@@ -171,13 +171,13 @@
         <div class="level-item has-text-centered">
           <div>
             <p class="heading">Errors</p>
-            <p class="title">0</p>
+            <p id="error-counter" class="title">0</p>
           </div>
         </div>
         <div class="level-item has-text-centered">
           <div>
             <p class="heading">Time</p>
-            <p class="title">00:00</p>
+            <p id="timer" class="title">00:00</p>
           </div>
         </div>
       </div>
