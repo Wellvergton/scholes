@@ -21,10 +21,10 @@ export default function keyPressManager({ keysToBeTyped, fingerIndicator,
   }
 
   function isTheCorrectKey(keyTyped, expectedKey) {
-    if (keyTyped == 'Enter' && expectedKey == '\u21B5') {
+    if (keyTyped === 'Enter' && expectedKey === '\u21B5') {
       return true;
     } else {
-      return keyTyped == expectedKey;
+      return keyTyped === expectedKey;
     }
   }
 
@@ -128,7 +128,7 @@ export default function keyPressManager({ keysToBeTyped, fingerIndicator,
 
     position++;
 
-    if (position == keysToBeTyped.length) {
+    if (position === keysToBeTyped.length) {
       EventEmitter.emit('stop');
       stopManageUserInputs();
 

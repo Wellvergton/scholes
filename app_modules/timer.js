@@ -3,7 +3,7 @@ export default function timer(timerElement) {
   let seconds = 0;
 
   function increaseTime() {
-    if (seconds == 59) {
+    if (seconds === 59) {
       minutes++;
       seconds = 0;
     } else {
@@ -36,7 +36,7 @@ export default function timer(timerElement) {
   let intervalFunction = false;
 
   function startTimer() {
-    if (intervalFunction == false) {
+    if (intervalFunction === false) {
       intervalFunction = setInterval(adjustTimer, 1000);
     }
   }

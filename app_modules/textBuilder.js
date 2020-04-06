@@ -36,9 +36,9 @@ export default function textBuilder(textElement) {
 
     for (let i = 0; i < string.length; i++) {
       if (i > 0) {
-        if (i % 5 == 0 && i % 60 != 0) {
+        if (i % 5 === 0 && i % 60 != 0) {
           newString = newString.addBlankSpace();
-        } else if (i % 60 == 0) {
+        } else if (i % 60 === 0) {
           newString = newString.addCarriageReturn();
         }
       }
@@ -61,7 +61,7 @@ export default function textBuilder(textElement) {
     for (let i = 0; i < splitedText.length; i++) {
       textElement.appendChild(span.cloneNode()).innerHTML = splitedText[i];
 
-      if (splitedText[i] == '\u21B5') {
+      if (splitedText[i] === '\u21B5') {
         textElement.appendChild(lineBreak.cloneNode());
       }
     }

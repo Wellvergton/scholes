@@ -78,7 +78,11 @@ export default function lessonScreenManager({
     }
   }
 
+  function getCurrentLesson() {
+    return lessonProxy.currentLesson;
+  }
+
   return {
-    build, destroy, nextLesson, previousLesson
+    build, destroy, nextLesson, previousLesson, getCurrentLesson
   }
 }

@@ -1,6 +1,10 @@
-export default function homeScreenManager({ homeScreenElement,
-  lessonsIndexesElements, lessonNameElement, previousLessonsButton,
-  nextLessonsButton } = {}) {
+export default function homeScreenManager({
+  homeScreenElement,
+  lessonsIndexesElements,
+  lessonNameElement,
+  previousLessonsButton,
+  nextLessonsButton
+} = {}) {
   const Properties = { selectedLesson: 1, lessonIndexPage: 1 }
   const Lessons = {
     1: 'qwert',
@@ -19,7 +23,7 @@ export default function homeScreenManager({ homeScreenElement,
 
   function markLessonSelectedButton() {
     for (let index of lessonsIndexesElements) {
-      if (parseInt(index.innerHTML) == Properties.selectedLesson) {
+      if (parseInt(index.innerHTML) === Properties.selectedLesson) {
         index.classList.add('is-current');
       }
     }
@@ -39,7 +43,7 @@ export default function homeScreenManager({ homeScreenElement,
 
   function isCurrentLessonOnTheScreen() {
     return [...lessonsIndexesElements].some((index) => {
-      return index.innerHTML == Properties.selectedLesson;
+      return parseInt(index.innerHTML) === Properties.selectedLesson;
     });
   }
 
@@ -73,7 +77,7 @@ export default function homeScreenManager({ homeScreenElement,
         markLessonSelectedButton();
         setLessonNameOnScreen();
       }
-      if (prop == 'lessonIndexPage') {
+      if (prop === 'lessonIndexPage') {
         unmarkLessonSelectedButtons();
 
         if (value === 1) {
@@ -118,6 +122,10 @@ export default function homeScreenManager({ homeScreenElement,
     lessonProxy.selectedLesson = parseInt(number);
   }
 
+  function getSelectedLesson() {
+    return lessonProxy.selectedLesson;
+  }
+
   function previousLessons() {
     if (lessonProxy.lessonIndexPage >= 2) {
       --lessonProxy.lessonIndexPage;
@@ -130,5 +138,7 @@ export default function homeScreenManager({ homeScreenElement,
     }
   }
 
-  return { build, destroy, selectLesson, previousLessons, nextLessons }
+  return {
+    build, destroy, selectLesson, previousLessons, nextLessons, getSelectedLesson
+  }
 }

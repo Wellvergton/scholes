@@ -23,13 +23,13 @@ const LessonScreen = lessonScreenManager({
 });
 
 document.addEventListener('keypress', (event) => {
-  if (event.code == 'Space' && event.target == document.body) {
+  if (event.code === 'Space' && event.target === document.body) {
     event.preventDefault();
   }
 });
 
 document.addEventListener('focusin', (event) => {
-  if (event.target.tagName == 'BUTTON') {
+  if (event.target.tagName === 'BUTTON') {
     event.target.blur();
   }
 });
@@ -69,7 +69,7 @@ aboutModal.addEventListener('click', (event) => {
 
   if (classList.contains('delete') || classList.contains('modal-background')) {
     toggleAboutModal();
-  } else if (event.target.tagName == 'A') {
+  } else if (event.target.tagName === 'A') {
     event.preventDefault();
     openLinkInOSBrowser(event.target.href);
   }
@@ -98,7 +98,7 @@ let rightHand = document.getElementById('right-hand');
 startButton.addEventListener('click', async () => {
   HomeScreen.destroy();
   await maximizeWindow();
-  LessonScreen.build(document.querySelector('.is-current').innerHTML);
+  LessonScreen.build(HomeScreen.getSelectedLesson());
   KeyPressManager.setHandsPosition(leftHand, rightHand)
   KeyPressManager.startManageUserInputs();
 });
@@ -106,9 +106,9 @@ startButton.addEventListener('click', async () => {
 let closeLessonButton = document.getElementById('close-button');
 
 closeLessonButton.addEventListener('click', () => {
-  let lesson = LessonScreen.destroy();
+  LessonScreen.destroy();
   unmaximizeWindow();
-  HomeScreen.build(lesson);
+  HomeScreen.build(LessonScreen.getCurrentLesson());
   KeyPressManager.stopManageUserInputs();
   Timer.clearScreenTimer();
 });
@@ -122,14 +122,14 @@ function hasPlayerAlreadyTyped() {
 let lessonNavBar = document.getElementById('lesson-nav-bar');
 
 lessonNavBar.addEventListener('mouseover', (event) => {
-  if (event.target.tagName == 'BUTTON' && hasPlayerAlreadyTyped()) {
+  if (event.target.tagName === 'BUTTON' && hasPlayerAlreadyTyped()) {
     event.target.classList.add('is-danger');
   }
 });
 
 ['mouseout', 'click'].forEach((evt) => {
   lessonNavBar.addEventListener(evt, (event) => {
-    if (event.target.tagName == 'BUTTON') {
+    if (event.target.tagName === 'BUTTON') {
       event.target.classList.remove('is-danger');
     }
   });
