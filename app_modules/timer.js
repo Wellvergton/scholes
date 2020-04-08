@@ -52,5 +52,5 @@ export default function timer(timerElement) {
     setScreenTimer();
   }
 
-  return { startTimer, clearScreenTimer }
+  return { startTimer, stopTimer, clearScreenTimer }
 }

@@ -1,7 +1,7 @@
 import homeScreenManager from './app_modules/homeScreenManager.js';
 import keyPressManager from './app_modules/keyPressManager.js';
 import lessonScreenManager from "./app_modules/lessonScreenManager.js";
-import recordsManager from './app_modules/records.js';
+import recordsManager from './app_modules/recordsManager.js';
 import timer from './app_modules/timer.js';
 
 const HomeScreen = homeScreenManager({
@@ -52,7 +52,7 @@ const Records = recordsManager({
 })
 
 KeyPressManager.on('start', Timer.startTimer);
-KeyPressManager.on('stop', [Timer.clearScreenTimer, Records.save]);
+KeyPressManager.on('stop', [Timer.stopTimer, Records.save]);
 
 let aboutModal = document.querySelector('.modal');
 
@@ -139,10 +139,12 @@ previousLessonButton.addEventListener('click', () => {
   LessonScreen.previousLesson();
   Timer.clearScreenTimer();
   errorCounter.innerHTML = '0';
+  KeyPressManager.startManageUserInputs();
 });
 
 nextLessonButton.addEventListener('click', () => {
   LessonScreen.nextLesson();
   Timer.clearScreenTimer();
   errorCounter.innerHTML = '0';
+  KeyPressManager.startManageUserInputs();
 });

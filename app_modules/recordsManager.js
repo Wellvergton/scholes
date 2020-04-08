@@ -1,5 +1,4 @@
 export default function RecordsManager({ timer, errorCounter } = {}) {
-
   function timeInSeconds(time) {
     let fields = time.split(':');
     let seconds = (parseInt(fields[0]) * 60) + parseInt(fields[1]);
@@ -12,6 +11,16 @@ export default function RecordsManager({ timer, errorCounter } = {}) {
     let keysPerMinute = (totalOfkeys / finalTimeInSeconds) * 60;
 
     return parseInt(keysPerMinute);
+  }
+
+  function compare(lessonIndex) {
+    let previousRecords = getRecords();
+    let stats = {};
+    let best = {};
+    let lesson = `lesson${lessonIndex}`;
+    let finalTime = timeInSeconds(timer.innerHTML);
+    stats.errors = parseInt(errorCounter.innerHTML);
+    stats.keysPerMinute = keysPerMinute(finalTime);
   }
 
   function save(lessonIndex) {
