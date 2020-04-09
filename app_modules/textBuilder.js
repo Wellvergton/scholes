@@ -1,6 +1,6 @@
 export default function textBuilder(textElement) {
-  String.prototype.shuffle = function() {
-    let a = this.split('');
+  String.prototype.shuffle = function () {
+    let a = this.split("");
     let n = this.length;
 
     for (let i = n - 1; i > 0; i--) {
@@ -10,19 +10,19 @@ export default function textBuilder(textElement) {
       a[j] = temp;
     }
 
-    return a.join('');
-  }
+    return a.join("");
+  };
 
-  String.prototype.addBlankSpace = function() {
-    return this.concat(' ');
-  }
+  String.prototype.addBlankSpace = function () {
+    return this.concat(" ");
+  };
 
-  String.prototype.addCarriageReturn = function() {
-    return this.concat('\u21B5');
-  }
+  String.prototype.addCarriageReturn = function () {
+    return this.concat("\u21B5");
+  };
 
   function build600CharScrambledWord(string) {
-    let newString = '';
+    let newString = "";
 
     while (newString.length < 600) {
       newString = newString.concat(string.shuffle());
@@ -32,7 +32,7 @@ export default function textBuilder(textElement) {
   }
 
   function splitWordWithBlankOrCarriage(string) {
-    let newString = '';
+    let newString = "";
 
     for (let i = 0; i < string.length; i++) {
       if (i > 0) {
@@ -49,23 +49,23 @@ export default function textBuilder(textElement) {
     return newString.addCarriageReturn();
   }
 
-  let span = document.createElement('span');
-  span.className = 'keys';
-  let lineBreak = document.createElement('br');
+  let span = document.createElement("span");
+  span.className = "keys";
+  let lineBreak = document.createElement("br");
 
   function build(keySet) {
-    textElement.innerHTML = '';
+    textElement.innerHTML = "";
     let rawText = build600CharScrambledWord(keySet);
     let splitedText = splitWordWithBlankOrCarriage(rawText);
 
     for (let i = 0; i < splitedText.length; i++) {
       textElement.appendChild(span.cloneNode()).innerHTML = splitedText[i];
 
-      if (splitedText[i] === '\u21B5') {
+      if (splitedText[i] === "\u21B5") {
         textElement.appendChild(lineBreak.cloneNode());
       }
     }
   }
 
-  return { build }
+  return { build };
 }

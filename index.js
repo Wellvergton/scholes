@@ -1,75 +1,75 @@
-import homeScreenManager from './app_modules/homeScreenManager.js';
-import keyPressManager from './app_modules/keyPressManager.js';
+import homeScreenManager from "./app_modules/homeScreenManager.js";
+import keyPressManager from "./app_modules/keyPressManager.js";
 import lessonScreenManager from "./app_modules/lessonScreenManager.js";
-import recordsManager from './app_modules/recordsManager.js';
-import timer from './app_modules/timer.js';
+import recordsManager from "./app_modules/recordsManager.js";
+import timer from "./app_modules/timer.js";
 
 const HomeScreen = homeScreenManager({
-  homeScreenElement: document.getElementById('home-screen'),
-  lessonsIndexesElements: document.getElementsByClassName('pagination-link'),
-  lessonNameElement: document.getElementById('lesson-name'),
-  nextLessonsButton: document.querySelector('.pagination-next'),
-  previousLessonsButton: document.querySelector('.pagination-previous'),
+  homeScreenElement: document.getElementById("home-screen"),
+  lessonsIndexesElements: document.getElementsByClassName("pagination-link"),
+  lessonNameElement: document.getElementById("lesson-name"),
+  nextLessonsButton: document.querySelector(".pagination-next"),
+  previousLessonsButton: document.querySelector(".pagination-previous"),
 });
 
-let previousLessonButton = document.getElementById('previous-button');
-let nextLessonButton = document.getElementById('next-button');
+let previousLessonButton = document.getElementById("previous-button");
+let nextLessonButton = document.getElementById("next-button");
 
 const LessonScreen = lessonScreenManager({
-  lessonScreenElement: document.getElementById('lesson-screen'),
-  textElement: document.getElementById('text'),
+  lessonScreenElement: document.getElementById("lesson-screen"),
+  textElement: document.getElementById("text"),
   previousLessonButton: previousLessonButton,
   nextLessonButton: nextLessonButton,
 });
 
-document.addEventListener('keypress', (event) => {
-  if (event.code === 'Space' && event.target === document.body) {
+document.addEventListener("keypress", (event) => {
+  if (event.code === "Space" && event.target === document.body) {
     event.preventDefault();
   }
 });
 
-document.addEventListener('focusin', (event) => {
-  if (event.target.tagName === 'BUTTON') {
+document.addEventListener("focusin", (event) => {
+  if (event.target.tagName === "BUTTON") {
     event.target.blur();
   }
 });
 
-let errorCounter = document.getElementById('error-counter');
+let errorCounter = document.getElementById("error-counter");
 
 const KeyPressManager = keyPressManager({
-  keysToBeTyped: document.getElementsByClassName('keys'),
-  fingerIndicator: document.getElementById('dot'),
+  keysToBeTyped: document.getElementsByClassName("keys"),
+  fingerIndicator: document.getElementById("dot"),
   errorCounter: errorCounter,
 });
 
-let timerElement = document.getElementById('timer');
+let timerElement = document.getElementById("timer");
 
 const Timer = timer(timerElement);
 
 const Records = recordsManager({
   timer: timerElement,
   errorCounter: errorCounter,
-})
+});
 
-KeyPressManager.on('start', Timer.startTimer);
-KeyPressManager.on('stop', [Timer.stopTimer, Records.save]);
+KeyPressManager.on("start", Timer.startTimer);
+KeyPressManager.on("stop", [Timer.stopTimer, Records.save]);
 
-let aboutModal = document.querySelector('.modal');
+let aboutModal = document.querySelector(".modal");
 
 function toggleAboutModal() {
-  aboutModal.classList.toggle('is-active');
+  aboutModal.classList.toggle("is-active");
 }
 
-let aboutButton = document.querySelector('.navbar-item > .button.is-info');
+let aboutButton = document.querySelector(".navbar-item > .button.is-info");
 
-aboutButton.addEventListener('click', toggleAboutModal);
+aboutButton.addEventListener("click", toggleAboutModal);
 
-aboutModal.addEventListener('click', (event) => {
+aboutModal.addEventListener("click", (event) => {
   let classList = event.target.classList;
 
-  if (classList.contains('delete') || classList.contains('modal-background')) {
+  if (classList.contains("delete") || classList.contains("modal-background")) {
     toggleAboutModal();
-  } else if (event.target.tagName === 'A') {
+  } else if (event.target.tagName === "A") {
     event.preventDefault();
     openLinkInOSBrowser(event.target.href);
   }
@@ -77,35 +77,35 @@ aboutModal.addEventListener('click', (event) => {
 
 HomeScreen.build(1);
 
-let lessonSelector = document.getElementById('lesson-selector');
+let lessonSelector = document.getElementById("lesson-selector");
 
-lessonSelector.addEventListener('click', (event) => {
+lessonSelector.addEventListener("click", (event) => {
   let classList = event.target.classList;
 
-  if (classList.contains('pagination-link')) {
+  if (classList.contains("pagination-link")) {
     HomeScreen.selectLesson(event.target.innerHTML);
-  } else if (classList.contains('pagination-previous')) {
+  } else if (classList.contains("pagination-previous")) {
     HomeScreen.previousLessons();
-  } else if (classList.contains('pagination-next')) {
+  } else if (classList.contains("pagination-next")) {
     HomeScreen.nextLessons();
   }
 });
 
-let startButton = document.getElementById('start-button');
-let leftHand = document.getElementById('left-hand');
-let rightHand = document.getElementById('right-hand');
+let startButton = document.getElementById("start-button");
+let leftHand = document.getElementById("left-hand");
+let rightHand = document.getElementById("right-hand");
 
-startButton.addEventListener('click', async () => {
+startButton.addEventListener("click", async () => {
   HomeScreen.destroy();
   await maximizeWindow();
   LessonScreen.build(HomeScreen.getSelectedLesson());
-  KeyPressManager.setHandsPosition(leftHand, rightHand)
+  KeyPressManager.setHandsPosition(leftHand, rightHand);
   KeyPressManager.startManageUserInputs();
 });
 
-let closeLessonButton = document.getElementById('close-button');
+let closeLessonButton = document.getElementById("close-button");
 
-closeLessonButton.addEventListener('click', () => {
+closeLessonButton.addEventListener("click", () => {
   LessonScreen.destroy();
   unmaximizeWindow();
   HomeScreen.build(LessonScreen.getCurrentLesson());
@@ -114,37 +114,39 @@ closeLessonButton.addEventListener('click', () => {
 });
 
 function hasPlayerAlreadyTyped() {
-  let firstChar = document.querySelector('.keys');
-  return firstChar.classList.contains('has-background-success') ||
-    firstChar.classList.contains('has-background-danger');
+  let firstChar = document.querySelector(".keys");
+  return (
+    firstChar.classList.contains("has-background-success") ||
+    firstChar.classList.contains("has-background-danger")
+  );
 }
 
-let lessonNavBar = document.getElementById('lesson-nav-bar');
+let lessonNavBar = document.getElementById("lesson-nav-bar");
 
-lessonNavBar.addEventListener('mouseover', (event) => {
-  if (event.target.tagName === 'BUTTON' && hasPlayerAlreadyTyped()) {
-    event.target.classList.add('is-danger');
+lessonNavBar.addEventListener("mouseover", (event) => {
+  if (event.target.tagName === "BUTTON" && hasPlayerAlreadyTyped()) {
+    event.target.classList.add("is-danger");
   }
 });
 
-['mouseout', 'click'].forEach((evt) => {
+["mouseout", "click"].forEach((evt) => {
   lessonNavBar.addEventListener(evt, (event) => {
-    if (event.target.tagName === 'BUTTON') {
-      event.target.classList.remove('is-danger');
+    if (event.target.tagName === "BUTTON") {
+      event.target.classList.remove("is-danger");
     }
   });
 });
 
-previousLessonButton.addEventListener('click', () => {
+previousLessonButton.addEventListener("click", () => {
   LessonScreen.previousLesson();
   Timer.clearScreenTimer();
-  errorCounter.innerHTML = '0';
+  errorCounter.innerHTML = "0";
   KeyPressManager.startManageUserInputs();
 });
 
-nextLessonButton.addEventListener('click', () => {
+nextLessonButton.addEventListener("click", () => {
   LessonScreen.nextLesson();
   Timer.clearScreenTimer();
-  errorCounter.innerHTML = '0';
+  errorCounter.innerHTML = "0";
   KeyPressManager.startManageUserInputs();
 });

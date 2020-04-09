@@ -18,7 +18,8 @@ $pagination-margin: 3rem;
 @import "./node_modules/bulma/sass/grid/_all.sass";
 @import "./node_modules/bulma/sass/layout/hero.sass";
 
-.button > *, a > * {
+.button > *,
+a > * {
   pointer-events: none;
 }
 

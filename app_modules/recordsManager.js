@@ -1,7 +1,7 @@
 export default function RecordsManager({ timer, errorCounter } = {}) {
   function timeInSeconds(time) {
-    let fields = time.split(':');
-    let seconds = (parseInt(fields[0]) * 60) + parseInt(fields[1]);
+    let fields = time.split(":");
+    let seconds = parseInt(fields[0]) * 60 + parseInt(fields[1]);
 
     return seconds;
   }
@@ -46,5 +46,5 @@ export default function RecordsManager({ timer, errorCounter } = {}) {
     }
   }
 
-  return { save }
+  return { save };
 }

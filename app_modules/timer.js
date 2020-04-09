@@ -18,7 +18,7 @@ export default function timer(timerElement) {
 
   function checkTime(number) {
     if (number < 10) {
-      number = '0' + number;
+      number = "0" + number;
     }
 
     return number;
@@ -52,5 +52,5 @@ export default function timer(timerElement) {
     setScreenTimer();
   }
 
-  return { startTimer, stopTimer, clearScreenTimer }
+  return { startTimer, stopTimer, clearScreenTimer };
 }

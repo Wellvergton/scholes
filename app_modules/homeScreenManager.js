@@ -3,42 +3,44 @@ export default function homeScreenManager({
   lessonsIndexesElements,
   lessonNameElement,
   previousLessonsButton,
-  nextLessonsButton
+  nextLessonsButton,
 } = {}) {
-  const Properties = { selectedLesson: 1, lessonIndexPage: 1 }
+  const Properties = { selectedLesson: 1, lessonIndexPage: 1 };
   const Lessons = {
-    1: 'qwert',
-    2: 'yuiop',
-    3: 'asdfg',
-    4: 'hjklç',
-    5: 'zxcvb',
-    6: 'nm,.;',
-    7: 'qwertasdfgzxcvb',
-    8: 'yuiophjklçnm,.;',
-    9: 'qwertyuiop',
-    10: 'asdfghjklç',
-    11: 'zxcvbnm,.;',
-    12: 'qwertyuiopasdfghjklçzxcvbnm,.;',
+    1: "qwert",
+    2: "yuiop",
+    3: "asdfg",
+    4: "hjklç",
+    5: "zxcvb",
+    6: "nm,.;",
+    7: "qwertasdfgzxcvb",
+    8: "yuiophjklçnm,.;",
+    9: "qwertyuiop",
+    10: "asdfghjklç",
+    11: "zxcvbnm,.;",
+    12: "qwertyuiopasdfghjklçzxcvbnm,.;",
   };
 
   function markLessonSelectedButton() {
     for (let index of lessonsIndexesElements) {
       if (parseInt(index.innerHTML) === Properties.selectedLesson) {
-        index.classList.add('is-current');
+        index.classList.add("is-current");
       }
     }
   }
 
   function unmarkLessonSelectedButtons() {
     for (let index of lessonsIndexesElements) {
-      if (index.classList.contains('is-current')) {
-        index.classList.remove('is-current');
+      if (index.classList.contains("is-current")) {
+        index.classList.remove("is-current");
       }
     }
   }
 
   function setLessonNameOnScreen() {
-    lessonNameElement.innerHTML = Lessons[Properties.selectedLesson].toUpperCase();
+    lessonNameElement.innerHTML = Lessons[
+      Properties.selectedLesson
+    ].toUpperCase();
   }
 
   function isCurrentLessonOnTheScreen() {
@@ -62,22 +64,22 @@ export default function homeScreenManager({
   }
 
   function disableButton(button) {
-    button.setAttribute('disabled', 'disabled');
+    button.setAttribute("disabled", "disabled");
   }
 
   function enableButton(button) {
-    button.removeAttribute('disabled');
+    button.removeAttribute("disabled");
   }
 
   const proxyHandler = {
     set: (target, prop, value) => {
-      if (prop === 'selectedLesson') {
+      if (prop === "selectedLesson") {
         target[prop] = value;
         unmarkLessonSelectedButtons();
         markLessonSelectedButton();
         setLessonNameOnScreen();
       }
-      if (prop === 'lessonIndexPage') {
+      if (prop === "lessonIndexPage") {
         unmarkLessonSelectedButtons();
 
         if (value === 1) {
@@ -104,18 +106,18 @@ export default function homeScreenManager({
       }
 
       return true;
-    }
-  }
+    },
+  };
   const lessonProxy = new Proxy(Properties, proxyHandler);
 
   function build(number) {
     lessonProxy.selectedLesson = number;
     lessonProxy.lessonIndexPage = Math.ceil(number / 3);
-    homeScreenElement.classList.remove('is-hidden');
+    homeScreenElement.classList.remove("is-hidden");
   }
 
   function destroy() {
-    homeScreenElement.classList.add('is-hidden');
+    homeScreenElement.classList.add("is-hidden");
   }
 
   function selectLesson(number) {
@@ -139,6 +141,11 @@ export default function homeScreenManager({
   }
 
   return {
-    build, destroy, selectLesson, previousLessons, nextLessons, getSelectedLesson
-  }
+    build,
+    destroy,
+    selectLesson,
+    previousLessons,
+    nextLessons,
+    getSelectedLesson,
+  };
 }
