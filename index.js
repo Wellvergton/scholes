@@ -1,5 +1,6 @@
 import homeScreenManager from "./app_modules/homeScreenManager.js";
 import keyPressManager from "./app_modules/keyPressManager.js";
+import lessonResultModalCreator from "./app_modules/lessonResultModalCreator.js";
 import lessonScreenManager from "./app_modules/lessonScreenManager.js";
 import recordsManager from "./app_modules/recordsManager.js";
 import timer from "./app_modules/timer.js";
@@ -75,7 +76,7 @@ aboutModal.addEventListener("click", (event) => {
   }
 });
 
-HomeScreen.build(1);
+// HomeScreen.build(1);
 
 let lessonSelector = document.getElementById("lesson-selector");
 
@@ -150,3 +151,43 @@ nextLessonButton.addEventListener("click", () => {
   errorCounter.innerHTML = "0";
   KeyPressManager.startManageUserInputs();
 });
+
+LessonScreen.build(1);
+
+let lessonResultErrors = document.querySelector(
+  "#results .level-item:first-child p:first-child"
+);
+let lessonResultKeysPerMinute = document.querySelector(
+  "#results .level-item:last-child p:first-child"
+);
+let previousErrors = document.querySelector(
+  "#previous-results .level-item:first-child p:first-child"
+);
+let previousKeysPerMinute = document.querySelector(
+  "#previous-results .level-item:last-child p:first-child"
+);
+let newRecordMessage = document.getElementById("new-record-msg");
+let previousResult = document.getElementById("previous-results");
+
+const LessonResultModal = lessonResultModalCreator({
+  lessonErrorsElem: lessonResultErrors,
+  lessonKeysPerMinuteElem: lessonResultKeysPerMinute,
+  previousErrorsElem: previousErrors,
+  previousKeysPerMinuteElem: previousKeysPerMinute,
+  newRecordMsgElem: newRecordMessage,
+  previousResultElem: previousResult,
+});
+
+let test1 = {
+  errors: 0,
+  keysPerMinute: 0,
+};
+
+let test2 = {
+  errors: 1,
+  keysPerMinute: 1,
+};
+
+let resultModal = document.getElementById("result-modal");
+
+LessonResultModal.build(resultModal, test1, test2);

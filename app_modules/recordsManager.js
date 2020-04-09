@@ -13,38 +13,47 @@ export default function RecordsManager({ timer, errorCounter } = {}) {
     return parseInt(keysPerMinute);
   }
 
-  function compare(lessonIndex) {
-    let previousRecords = getRecords();
-    let stats = {};
-    let best = {};
-    let lesson = `lesson${lessonIndex}`;
+  function getLessonCurrentStats() {
+    let currentLessonStats = {};
     let finalTime = timeInSeconds(timer.innerHTML);
-    stats.errors = parseInt(errorCounter.innerHTML);
-    stats.keysPerMinute = keysPerMinute(finalTime);
+    currentLessonStats.errors = parseInt(errorCounter.innerHTML);
+    currentLessonStats.keysPerMinute = keysPerMinute(finalTime);
+
+    return currentLessonStats;
+  }
+
+  function getLessonPreviousStats(lessonNumber) {
+    let records = getRecords();
+
+    if (records[`lesson${lessonNumber}`]) {
+      let lessonPreviousStats = records[`lesson${lessonNumber}`];
+
+      return lessonPreviousStats;
+    } else {
+      return null;
+    }
   }
 
   function save(lessonIndex) {
     let records = getRecords();
-    let stats = {};
+    let previousStats = getLessonPreviousStats();
+    let currentStats = getLessonCurrentStats();
     let lesson = `lesson${lessonIndex}`;
-    let finalTime = timeInSeconds(timer.innerHTML);
-    stats.errors = parseInt(errorCounter.innerHTML);
-    stats.keysPerMinute = keysPerMinute(finalTime);
 
-    if (stats.keysPerMinute < 850) {
-      if (!records[lesson]) {
-        records[lesson] = stats;
+    if (currentStats.keysPerMinute < 850) {
+      if (previousStats === null) {
+        records[lesson] = currentStats;
       }
-      if (stats.errors < records[lesson].errors) {
-        records[lesson].errors = stats.errors;
+      if (currentStats.errors < previousStats.errors) {
+        records[lesson].errors = currentStats.errors;
       }
-      if (stats.keysPerMinute < records[lesson].keysPerMinute) {
-        records[lesson].keysPerMinute = stats.keysPerMinute;
+      if (currentStats.keysPerMinute < previousStats.keysPerMinute) {
+        records[lesson].keysPerMinute = currentStats.keysPerMinute;
       }
 
       saveRecords(records);
     }
   }
 
-  return { save };
+  return { save, getLessonCurrentStats, getLessonPreviousStats };
 }
