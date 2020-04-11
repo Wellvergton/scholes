@@ -33,7 +33,7 @@ app.on("activate", () => {
 });
 
 let userConfigPath = app.getPath("userData");
-let recordsFile = `${userConfigPath}/User Data/records.json`;
+let recordsFile = `${userConfigPath}/records.json`;
 
 if (!fs.existsSync(recordsFile)) {
   fs.writeFileSync(recordsFile, "");
