@@ -154,6 +154,7 @@ nextLessonButton.addEventListener("click", () => {
 
 LessonScreen.build(1);
 
+let resultModal = document.getElementById("result-modal");
 let lessonResultErrors = document.querySelector(
   "#results .level-item:first-child p:first-child"
 );
@@ -170,6 +171,7 @@ let newRecordMessage = document.getElementById("new-record-msg");
 let previousResult = document.getElementById("previous-results");
 
 const LessonResultModal = lessonResultModalCreator({
+  modalElem: resultModal,
   lessonErrorsElem: lessonResultErrors,
   lessonKeysPerMinuteElem: lessonResultKeysPerMinute,
   previousErrorsElem: previousErrors,
@@ -177,6 +179,8 @@ const LessonResultModal = lessonResultModalCreator({
   newRecordMsgElem: newRecordMessage,
   previousResultElem: previousResult,
 });
+
+window.LessonResultModal = LessonResultModal;
 
 let test1 = {
   errors: 0,
@@ -188,6 +192,4 @@ let test2 = {
   keysPerMinute: 1,
 };
 
-let resultModal = document.getElementById("result-modal");
-
-LessonResultModal.build(resultModal, test1, test2);
+LessonResultModal.build(test1, test2);
