@@ -75,6 +75,7 @@ export default function createResultModal() {
 
   function destroy() {
     elements.modal.classList.remove("is-active");
+    elements.previousResults.classList.add("is-hidden");
     elements.newRecordMessage.classList.add("is-hidden");
 
     for (let prop in state) {
