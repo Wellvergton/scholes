@@ -15,6 +15,7 @@ export default function createResultModal() {
       "[data-previous-keys-per-minute]"
     ),
     newRecordMessage: document.querySelector("[data-new-record-msg]"),
+    nextLessonButton: document.querySelector("[data-next-lesson-btn]"),
   };
 
   function setTextInGreen(element) {
@@ -59,8 +60,10 @@ export default function createResultModal() {
     },
   });
 
-  function build(lessonStats, previousStats) {
-    if (previousStats === undefined) throw "previousStats cannot be undefined";
+  function build(lessonStats, previousStats, hasNextLesson) {
+    if (hasNextLesson === false) {
+      elements.nextLessonButton.classList.add("is-hidden");
+    }
 
     state.errorsCount = lessonStats.errors;
     state.keysPerMinuteCount = lessonStats.keysPerMinute;
@@ -77,6 +80,7 @@ export default function createResultModal() {
     elements.modal.classList.remove("is-active");
     elements.previousResults.classList.add("is-hidden");
     elements.newRecordMessage.classList.add("is-hidden");
+    elements.nextLessonButton.classList.remove("is-hidden");
 
     for (let prop in state) {
       state[prop] = null;
