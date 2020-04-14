@@ -210,7 +210,10 @@
         </div>
       </div>
 
-      <section id="result-modal" class="modal has-text-centered">
+      <section
+        class="modal has-text-centered"
+        data-result-modal
+      >
         <div class="modal-background"></div>
         <div class="modal-card">
           <header class="modal-card-head">
@@ -218,37 +221,40 @@
           </header>
           <section class="modal-card-body">
             <p
-              id="new-record-msg"
               class="title is-1 has-text-success is-hidden"
+              data-new-record-msg
             >
               NEW RECORD!
             </p>
-            <div id="results" class="level">
+            <div class="level">
               <div class="level-item has-text-centered">
                 <div>
-                  <p class="is-size-1 has-text-weight-bold">0</p>
+                  <p class="is-size-1 has-text-weight-bold" data-errors></p>
                   <p class="subtitle">Errors</p>
                 </div>
               </div>
               <div class="level-item has-text-centered">
                 <div>
-                  <p class="is-size-1 has-text-weight-bold">0</p>
+                  <p
+                    class="is-size-1 has-text-weight-bold"
+                    data-keys-per-minute
+                  ></p>
                   <p class="subtitle">Keys per minute</p>
                 </div>
               </div>
             </div>
-            <div class="is-hidden" id="previous-results">
+            <div class="is-hidden" data-previous-results>
               <p class="title is-4">Lesson Previous Record</p>
               <div class="level">
                 <div class="level-item has-text-centered">
                   <div>
-                    <p class="is-size-3">0</p>
+                    <p class="is-size-3" data-previous-errors></p>
                     <p class="subtitle">Errors</p>
                   </div>
                 </div>
                 <div class="level-item has-text-centered">
                   <div>
-                    <p class="is-size-3">0</p>
+                    <p class="is-size-3" data-previous-keys-per-minute></p>
                     <p class="subtitle">Keys per minute</p>
                   </div>
                 </div>
