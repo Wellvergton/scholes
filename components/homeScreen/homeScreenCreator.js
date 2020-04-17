@@ -71,15 +71,15 @@ export default function createHomeScreen() {
   });
   const HomeScreenObservable = {
     observers: [],
-    subscribe: function(observer) {
+    subscribe: function (observer) {
       this.observers.push(observer);
     },
-    notify: function() {
+    notify: function () {
       for (let observer of this.observers) {
         observer(state.selectedLesson);
       }
-    }
-  }
+    },
+  };
 
   function subscribe(callback) {
     HomeScreenObservable.subscribe(callback);

@@ -181,7 +181,7 @@ export default function createLessonScreen() {
     ResultModal.build(
       RecordsManager.getLessonCurrentStats(),
       RecordsManager.getLessonPreviousStats(state.currentLesson),
-      state.currentLesson === 12 ? false : true,
+      state.currentLesson === 12 ? false : true
     );
   }
 
