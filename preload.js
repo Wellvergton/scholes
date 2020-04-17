@@ -6,11 +6,6 @@ window.unmaximizeWindow = function () {
 
 window.maximizeWindow = function () {
   ipcRenderer.send("maximize-window");
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve();
-    }, 100);
-  });
 };
 
 window.openLinkInOSBrowser = function (link) {

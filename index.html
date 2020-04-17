@@ -13,7 +13,7 @@
     <title>Scholes</title>
   </head>
   <body class="is-unselectable">
-    <section id="home-screen" class="hero is-fullheight is-hidden">
+    <section data-home-screen class="hero is-fullheight is-hidden">
       <div class="hero-head">
         <nav class="navbar">
           <div class="columns is-mobile">
@@ -24,7 +24,7 @@
             </div>
             <div class="column has-text-right">
               <div class="navbar-item">
-                <button class="button is-info">About</button>
+                <button class="button is-info" data-about-button>About</button>
               </div>
             </div>
           </div>
@@ -44,13 +44,13 @@
                 <img src="./_assets/image.png" alt="" />
               </figure>
               <div class="content column is-full">
-                <p id="lesson-name"></p>
+                <p data-lesson-name></p>
               </div>
             </div>
 
             <div class="card-footer columns">
               <div class="column is-full">
-                <button id="start-button" class="button is-primary">
+                <button class="button is-primary" data-start-button>
                   Start
                 </button>
               </div>
@@ -58,28 +58,28 @@
           </div>
 
           <nav
-            id="lesson-selector"
             class="pagination"
             role="navigation"
             aria-label="pagination"
+            data-lesson-selector
           >
-            <a class="pagination-previous">
+            <a class="pagination-previous" data-previous-lessons>
               <span class="icon">
                 <i class="fas fa-chevron-left"></i>
               </span>
             </a>
             <ul class="pagination-list">
               <li>
-                <a class="pagination-link">1</a>
+                <a class="pagination-link" data-index>1</a>
               </li>
               <li>
-                <a class="pagination-link">2</a>
+                <a class="pagination-link" data-index>2</a>
               </li>
               <li>
-                <a class="pagination-link">3</a>
+                <a class="pagination-link" data-index>3</a>
               </li>
             </ul>
-            <a class="pagination-next">
+            <a class="pagination-next" data-next-lessons>
               <span class="icon">
                 <i class="fas fa-chevron-right"></i>
               </span>
@@ -88,7 +88,7 @@
         </div>
       </div>
 
-      <div class="modal">
+      <div class="modal" data-about-modal>
         <div class="modal-background"></div>
         <div class="modal-card">
           <header class="modal-card-head">
@@ -146,23 +146,26 @@
       </div>
     </section>
 
-    <section id="lesson-screen" class="hero is-fullheight is-hidden">
+    <section
+      class="hero is-fullheight is-hidden"
+      data-lesson-screen
+    >
       <div class="hero-head">
         <nav class="navbar is-spaced">
-          <div id="lesson-nav-bar" class="navbar-menu">
-            <button id="close-button" class="button is-white">
+          <div class="navbar-menu" data-lesson-nav-bar>
+            <button class="button is-white" data-close-lesson>
               <span class="icon is-medium">
                 <i class="fas fa-times fa-2x"></i>
               </span>
             </button>
 
             <div class="navbar-end">
-              <button id="previous-button" class="button is-white">
+              <button class="button is-white" data-previous-lesson>
                 <span class="icon is-medium">
                   <i class="fas fa-chevron-left fa-2x"></i>
                 </span>
               </button>
-              <button id="next-button" class="button is-white">
+              <button class="button is-white" data-next-lesson>
                 <span class="icon is-medium">
                   <i class="fas fa-chevron-right fa-2x"></i>
                 </span>
@@ -174,21 +177,21 @@
 
       <div class="hero-body">
         <div class="container columns is-mobile is-vcentered">
-          <i id="dot" class="fas fa-circle has-text-success"></i>
+          <i class="fas fa-circle has-text-success" data-dot></i>
           <div class="column has-text-right">
             <i
-              id="left-hand"
               class="fas fa-hand-paper fa-8x fa-flip-horizontal"
+              data-left-hand
             ></i>
           </div>
           <div class="column is-three-quarters has-text-centered">
             <p
-              id="text"
               class="is-size-5 is-family-monospace is-unselectable"
+              data-text
             ></p>
           </div>
           <div class="column">
-            <i id="right-hand" class="fas fa-hand-paper fa-8x"></i>
+            <i class="fas fa-hand-paper fa-8x" data-right-hand></i>
           </div>
         </div>
       </div>
@@ -198,13 +201,13 @@
           <div class="level-item has-text-centered">
             <div>
               <p class="heading">Errors</p>
-              <p id="error-counter" class="title">0</p>
+              <p class="title" data-error-counter>0</p>
             </div>
           </div>
           <div class="level-item has-text-centered">
             <div>
               <p class="heading">Time</p>
-              <p id="timer" class="title">00:00</p>
+              <p class="title" data-timer>00:00</p>
             </div>
           </div>
         </div>
@@ -263,9 +266,15 @@
             </div>
           </section>
           <footer class="modal-card-foot">
-            <button class="button is-success" data-next-lesson-btn>Next</button>
-            <button class="button is-info">Repeat</button>
-            <button class="button is-warning">Close Lesson</button>
+            <button class="button is-success" data-next-lesson-btn>
+              Next
+            </button>
+            <button class="button is-info" data-repeat-lesson-btn>
+              Repeat
+            </button>
+            <button class="button is-warning" data-close-lesson-btn>
+              Close Lesson
+            </button>
           </footer>
         </div>
       </section>
