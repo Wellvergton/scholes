@@ -112,7 +112,6 @@ export default function createLessonScreen() {
     state.currentLesson = state.currentLesson;
     TextBuilder.build(lessons[state.currentLesson]);
     Timer.clearScreenTimer();
-    KeyPressManager.stopManageUserInputs();
     KeyPressManager.startManageUserInputs();
   }
 
@@ -173,8 +172,6 @@ export default function createLessonScreen() {
     RecordsManager.save(state.currentLesson);
   }
 
-  KeyPressManager.on("stop", saveRecords);
-
   const ResultModal = createRestultModal(nextLesson, restartLesson, destroy);
 
   function showResults() {
@@ -186,6 +183,7 @@ export default function createLessonScreen() {
   }
 
   KeyPressManager.on("stop", showResults);
+  KeyPressManager.on("stop", saveRecords);
 
   return { build, destroy, selectLesson, subscribe };
 }
