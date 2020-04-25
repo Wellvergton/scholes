@@ -12,7 +12,7 @@ export default function createRecordsManager({ timer, errorCounter } = {}) {
     let totalOfkeys = 720;
     let keysPerMinute = (totalOfkeys / finalTimeInSeconds) * 60;
 
-    return keysPerMinute;
+    return Math.round(keysPerMinute);
   }
 
   function getLessonCurrentStats() {
