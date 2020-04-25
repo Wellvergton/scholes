@@ -38,8 +38,6 @@ export default function createRestultModal(
       elements[property].innerHTML = value;
 
       if (!Object.values(target).includes(null)) {
-        elements.previousResults.classList.remove("is-hidden");
-
         if (target.errorsCount < target.previousErrorsCount) {
           setTextInGreen(elements.errorsCount);
         } else if (target.errorsCount > target.previousErrorsCount) {
@@ -69,6 +67,10 @@ export default function createRestultModal(
   function build(lessonStats, previousStats, hasNextLesson) {
     if (hasNextLesson === false) {
       elements.nextLessonButton.classList.add("is-hidden");
+    }
+
+    if (previousStats != null) {
+      elements.previousResults.classList.remove("is-hidden");
     }
 
     state.errorsCount = lessonStats.errors;
