@@ -124,7 +124,7 @@ export default function createLessonScreen() {
   }
 
   function build() {
-    maximizeWindow();
+    preload.maximizeWindow();
     TextBuilder.build(lessons[state.currentLesson]);
     elements.main.classList.remove("is-hidden");
     setTimeout(() => {

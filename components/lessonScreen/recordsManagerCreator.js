@@ -25,7 +25,7 @@ export default function createRecordsManager({ timer, errorCounter } = {}) {
   }
 
   function getLessonPreviousStats(lessonNumber) {
-    let records = getRecords();
+    let records = preload.getRecords();
 
     if (records[`lesson${lessonNumber}`]) {
       let lessonPreviousStats = records[`lesson${lessonNumber}`];
@@ -37,7 +37,7 @@ export default function createRecordsManager({ timer, errorCounter } = {}) {
   }
 
   function save(lessonIndex) {
-    let records = getRecords();
+    let records = preload.getRecords();
     let previousStats = getLessonPreviousStats();
     let currentStats = getLessonCurrentStats();
     let lesson = `lesson${lessonIndex}`;
@@ -54,7 +54,7 @@ export default function createRecordsManager({ timer, errorCounter } = {}) {
         }
       }
 
-      saveRecords(records);
+      preload.saveRecords(records);
     }
   }
 

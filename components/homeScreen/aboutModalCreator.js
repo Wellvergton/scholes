@@ -15,7 +15,7 @@ export default function createAboutModal() {
       toggleModal();
     } else if (event.target.tagName === "A") {
       event.preventDefault();
-      openLinkInOSBrowser(event.target.href);
+      preload.openLinkInOSBrowser(event.target.href);
     }
   });
 

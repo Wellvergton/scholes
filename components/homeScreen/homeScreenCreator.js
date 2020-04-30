@@ -150,7 +150,7 @@ export default function createHomeScreen() {
   }
 
   function build() {
-    unmaximizeWindow();
+    preload.unmaximizeWindow();
     elements.main.classList.remove("is-hidden");
   }
 
