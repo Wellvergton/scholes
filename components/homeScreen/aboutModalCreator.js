@@ -2,7 +2,13 @@ export default function createAboutModal() {
   const modal = document.querySelector("[data-about-modal]");
 
   function toggleModal() {
-    modal.classList.toggle("is-active");
+    if (!modal.classList.contains("is-active")) {
+      modal.classList.toggle("is-active");
+      setTimeout(() => modal.style.opacity = "1", 0);
+    } else {
+      modal.style.opacity = "0";
+      setTimeout(() => modal.classList.toggle("is-active"), 250);
+    }
   }
 
   modal.addEventListener("click", (event) => {

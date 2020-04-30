@@ -82,19 +82,23 @@ export default function createRestultModal(
     }
 
     elements.modal.classList.add("is-active");
+    setTimeout(() => elements.modal.style.opacity = "1", 0);
   }
 
   function destroy() {
-    elements.modal.classList.remove("is-active");
-    elements.previousResults.classList.add("is-hidden");
-    elements.newRecordMessage.classList.add("is-hidden");
-    elements.nextLessonButton.classList.remove("is-hidden");
+    elements.modal.style.opacity = "0";
+    setTimeout(() => {
+      elements.modal.classList.remove("is-active");
+      elements.previousResults.classList.add("is-hidden");
+      elements.newRecordMessage.classList.add("is-hidden");
+      elements.nextLessonButton.classList.remove("is-hidden");
 
-    for (let prop in state) {
-      state[prop] = null;
-      elements[prop].classList.remove("has-text-success");
-      elements[prop].classList.remove("has-text-danger");
-    }
+      for (let prop in state) {
+        state[prop] = null;
+        elements[prop].classList.remove("has-text-success");
+        elements[prop].classList.remove("has-text-danger");
+      }
+    }, 250);
   }
 
   elements.nextLessonButton.addEventListener("click", () => {

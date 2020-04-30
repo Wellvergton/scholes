@@ -5839,11 +5839,9 @@ a.navbar-item,
   to {
     opacity: 0; } }
 
-@keyframes fadein {
-  from {
-    opacity: 0; }
-  to {
-    opacity: 1; } }
+.modal {
+  opacity: 0;
+  transition: opacity 200ms; }
 
 .fade {
   animation: fade linear 400ms alternate-reverse; }
