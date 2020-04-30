@@ -13,6 +13,14 @@ document.addEventListener("focusin", (event) => {
   }
 });
 
+document.addEventListener("animationend", () => {
+  let affecteds = document.getElementsByClassName("fade");
+
+  for (let a of affecteds) {
+    a.classList.remove("fade");
+  }
+});
+
 const HomeScreen = createHomeScreen();
 const LessonScreen = createLessonScreen();
 

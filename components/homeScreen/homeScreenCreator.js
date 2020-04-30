@@ -166,9 +166,21 @@ export default function createHomeScreen() {
     if (classList.contains("pagination-link")) {
       selectLesson(event.target.innerHTML);
     } else if (classList.contains("pagination-previous")) {
-      previousLessons();
+      if (!event.target.hasAttribute("disabled")) {
+        for (let index of elements.indexes) {
+          index.classList.add("fade");
+        }
+
+        previousLessons();
+      }
     } else if (classList.contains("pagination-next")) {
-      nextLessons();
+      if (!event.target.hasAttribute("disabled")) {
+        for (let index of elements.indexes) {
+          index.classList.add("fade");
+        }
+
+        nextLessons();
+      }
     }
   });
   elements.startButton.addEventListener("click", async () => {
