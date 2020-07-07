@@ -17,7 +17,7 @@
   "license": "MIT",
   "devDependencies": {
     "bulma": "^0.8.2",
-    "electron": "^7.2.3",
+    "electron": "^7.2.4",
     "electron-reload": "^1.5.0",
     "node-sass": "^4.14.1"
   },
